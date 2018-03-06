@@ -6,18 +6,55 @@
         xmlns:local="clr-namespace:MovieManager.cs"
         xmlns:viewModels="clr-namespace:MovieManager.cs.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" MinHeight="1068" Width="1280" MaxWidth="1760"
+        WindowState="Maximized"
+        WindowStyle="ToolWindow">
     <Window.DataContext>
         <viewModels:DashboardViewModel />
     </Window.DataContext>
-    <Grid>
-        <ListView ItemsSource="{Binding Movies}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="100" Header="Title" DisplayMemberBinding="{Binding Title}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+    <Grid Background="{StaticResource Background1}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Column="1">
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect />
+                </Border.Effect>
+                <Grid Column="1" Background="{StaticResource Background2}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="16*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="8*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Column="0">
+                                <ListView ItemsSource="{Binding Movies}" Background="{StaticResource Background2}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Width="100" Header="Title" DisplayMemberBinding="{Binding Title}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                            <Grid Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
 

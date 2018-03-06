@@ -5,5 +5,8 @@
              xmlns:viewModels="clr-namespace:MovieManager.cs.ViewModels"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!--Colours-->
+        <SolidColorBrush x:Key="Background1">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="Background2">#DCD6D6</SolidColorBrush>
     </Application.Resources>
 </Application>
