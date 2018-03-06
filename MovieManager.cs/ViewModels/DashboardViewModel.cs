@@ -12,17 +12,9 @@
         {
             var movieController = AutofacInstaller.Container.Resolve<IMovieController>();
 
-            //Movies = movieController.GetAllMovies();
-
-            Movies = new List<Movie>
-            {
-                new Movie
-                {
-                    Title = "King Kong"
-                }
-            };
+            Movies = movieController.GetMovieDataFromLocalLibraryFile();
         }
 
-        public ICollection<Movie> Movies { get; set; }
+        public IList<Movie> Movies { get; set; }
     }
 }

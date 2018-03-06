@@ -23,7 +23,8 @@
             builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
 
             // Queries
-            builder.RegisterType<QueryMovieById>().As<IQueryForMovieById>().InstancePerDependency();
+            builder.RegisterType<QueryForMovieById>().As<IQueryForMovieById>().InstancePerLifetimeScope();
+            builder.RegisterType<QueryForMoviesesByTitle>().As<IQueryForMoviesByTitle>().InstancePerLifetimeScope();
 
             Container = builder.Build();
         }

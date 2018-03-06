@@ -2,8 +2,6 @@
 {
     using System.Configuration;
     using System.Windows;
-    using Autofac;
-    using Contracts;
     using DM.MovieApi;
 
     /// <summary>
@@ -13,15 +11,11 @@
     {
         public MainWindow()
         {
+            MovieDbFactory.RegisterSettings(ConfigurationManager.AppSettings["ApiKey"]);
+
             AutofacInstaller.RegisterComponents();
 
             InitializeComponent();
-            
-            MovieDbFactory.RegisterSettings(ConfigurationManager.AppSettings["ApiKey"]);
-
-            //DasbDashboardViewModel = container.Resolve<IDashboardViewModel>();
         }
-
-        //public IDashboardViewModel DasbDashboardViewModel { get; set; }
     }
 }
