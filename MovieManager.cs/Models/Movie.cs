@@ -12,6 +12,14 @@
 
         public int MovieId { get; set; }
 
-        public double Rating { get; set; }
+        public double? Rating { get; set; }
+
+        public string Synopsis { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public string TagLine { get; set; }
+
+        public int? RuntTime { get; set; }
     }
 }

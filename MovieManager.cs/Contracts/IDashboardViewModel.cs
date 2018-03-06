@@ -5,6 +5,6 @@
 
     public interface IDashboardViewModel
     {
-        ICollection<Movie> Movies { get; }
+        IList<Movie> Movies { get; }
     }
 }

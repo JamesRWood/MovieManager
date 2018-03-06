@@ -5,6 +5,14 @@
 
     public interface IMovieController
     {
-        ICollection<Movie> GetAllMovies();
+        //IList<Movie> GetAllLocalMovies();
+
+        IList<Movie> GetMovieDataFromLocalLibraryFile();
+
+        IList<Movie> SearchForMoviesByTitle(string title);
+
+        Movie GetMovieById(int id);
+
+        void StoreMovieData(IList<Movie> movies);
     }
 }
