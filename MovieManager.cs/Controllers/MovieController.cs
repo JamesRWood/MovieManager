@@ -37,8 +37,13 @@
 
             var serializer = new JsonSerializer();
             var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
-            var jsonData = serializer.Deserialize<List<Movie>>(new JsonTextReader(new StreamReader(movieLibraryFilePath)));
 
+            if (!File.Exists(movieLibraryFilePath))
+            {
+                return movies;
+            }
+
+            var jsonData = serializer.Deserialize<List<Movie>>(new JsonTextReader(new StreamReader(movieLibraryFilePath)));
             jsonData.ForEach(x => movies.Add(x));
 
             return movies;
