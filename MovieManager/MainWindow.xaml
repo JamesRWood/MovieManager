@@ -29,16 +29,28 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="16*"/>
                         </Grid.RowDefinitions>
+                        <Grid Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Column="4" Name="ButtonContainer">
+                                <Button Content="DoStuff! =]" Style="{StaticResource ButtonStyle}" Width="{Binding ActualWidth, ElementName=ButtonContainer}" Command="{Binding ScanForLocalMovieFilesCommand}"/>
+                            </Grid>
+                        </Grid>
                         <Grid Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="8*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Column="0">
+                            <Grid Column="0" Name="TitleListContainer">
                                 <ListView ItemsSource="{Binding Movies}" Background="{StaticResource LightGrey}">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn Width="100" Header="Title" DisplayMemberBinding="{Binding Title}"/>
+                                            <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

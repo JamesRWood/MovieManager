@@ -1,4 +1,7 @@
-﻿namespace MovieManager
+﻿using MovieManager.Commands;
+using MovieManager.Contracts.Commands;
+
+namespace MovieManager
 {
     using Autofac;
     using Contracts;
@@ -16,15 +19,21 @@
         {
             var builder = new ContainerBuilder();
 
+            // Commondata class
+            builder.RegisterType<CommonDataViewModel>().As<ICommonDataViewModel>().InstancePerLifetimeScope();
+
             // Controllers
             builder.RegisterType<MovieController>().As<IMovieController>().InstancePerLifetimeScope();
 
-            // ViewModels
-            builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
+            // Commands
+            builder.RegisterType<ScanForLocalMovieFilesCommand>().As<IScanForLocalMovieFilesCommand>().InstancePerLifetimeScope();
 
             // Queries
             builder.RegisterType<QueryForMovieById>().As<IQueryForMovieById>().InstancePerLifetimeScope();
             builder.RegisterType<QueryForMoviesesByTitle>().As<IQueryForMoviesByTitle>().InstancePerLifetimeScope();
+
+            // ViewModels
+            builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
 
             Container = builder.Build();
         }
