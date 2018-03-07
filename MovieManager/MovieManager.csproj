@@ -82,6 +82,7 @@
     <Compile Include="Contracts\IDashboardViewModel.cs" />
     <Compile Include="Contracts\Queries\IQueryForMoviesByTitle.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Converters\ScreenResolutionToPageWidthConverter.cs" />
     <Compile Include="Queries\QueryForMovieById.cs" />
     <Compile Include="Queries\QueryForMoviesesByTitle.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />

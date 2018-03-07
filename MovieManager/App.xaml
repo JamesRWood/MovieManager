@@ -3,10 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MovieManager"
              xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
+             xmlns:converters="clr-namespace:MovieManager.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Colours-->
-        <SolidColorBrush x:Key="Background1">#4C4645</SolidColorBrush>
-        <SolidColorBrush x:Key="Background2">#DCD6D6</SolidColorBrush>
+        <SolidColorBrush x:Key="DarkGrey">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="Grey">#6C6A69</SolidColorBrush>
+        <SolidColorBrush x:Key="LightGrey">#DCD6D6</SolidColorBrush>
+        
+        <!--Visual Brushes-->
+        <VisualBrush x:Key="HatchBrush" TileMode="Tile"
+                     Viewport="0,0,5,5" ViewportUnits="Absolute"
+                     Viewbox="0,0,5,5" ViewboxUnits="Absolute">
+            <VisualBrush.Visual>
+                <Grid Background="{StaticResource DarkGrey}">
+                    <Path Data="M 0 5 L 5 0 M -2 2 L 2 -2 M 3 7 L 7 3"
+                          Stroke="{StaticResource Grey}" StrokeEndLineCap="Square"
+                          RenderOptions.EdgeMode="Aliased" />
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+        
+        <!--Converters-->
+        <converters:ScreenResolutionToPageWidthConverter x:Key="ScreenResolutionToPageWidthConverter"/>
     </Application.Resources>
 </Application>

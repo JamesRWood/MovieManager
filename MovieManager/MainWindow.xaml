@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:MovieManager"
         xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="1068" Width="1280" MaxWidth="1760"
+        Title="MainWindow"
         WindowState="Maximized"
         WindowStyle="ToolWindow">
     <Window.DataContext>
         <viewModels:DashboardViewModel />
     </Window.DataContext>
-    <Grid Background="{StaticResource Background1}">
+    <Grid Background="{StaticResource HatchBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="{Binding Converter={StaticResource ScreenResolutionToPageWidthConverter}, ConverterParameter={x:Static SystemParameters.FullPrimaryScreenWidth}}"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid Column="1">
@@ -23,7 +23,7 @@
                 <Border.Effect>
                     <DropShadowEffect />
                 </Border.Effect>
-                <Grid Column="1" Background="{StaticResource Background2}">
+                <Grid Column="1" Background="{StaticResource LightGrey}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
@@ -35,7 +35,7 @@
                                 <ColumnDefinition Width="8*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Column="0">
-                                <ListView ItemsSource="{Binding Movies}" Background="{StaticResource Background2}">
+                                <ListView ItemsSource="{Binding Movies}" Background="{StaticResource LightGrey}">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Width="100" Header="Title" DisplayMemberBinding="{Binding Title}"/>
