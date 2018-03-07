@@ -101,10 +101,18 @@
             }
 
             var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
-            using (var file = File.CreateText(movieLibraryFilePath))
+
+            if (!File.Exists(movieLibraryFilePath))
             {
-                var serializer = new JsonSerializer();
-                serializer.Serialize(file, movies);
+                using (var file = File.CreateText(movieLibraryFilePath))
+                {
+                    var serializer = new JsonSerializer();
+                    serializer.Serialize(file, movies);
+                }
+            }
+            else
+            {
+
             }
         }
 
