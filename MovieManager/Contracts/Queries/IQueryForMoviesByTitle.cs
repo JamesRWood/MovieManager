@@ -1,4 +1,4 @@
-﻿namespace MovieManager.cs.Contracts.Queries
+﻿namespace MovieManager.Contracts.Queries
 {
     using System.Collections.Generic;
     using Models;

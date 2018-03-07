@@ -1,4 +1,4 @@
-﻿namespace MovieManager.cs.Queries
+﻿namespace MovieManager.Queries
 {
     using System.Threading.Tasks;
     using Contracts.Queries;
