@@ -1,0 +1,12 @@
+﻿<Application x:Class="MovieManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MovieManager"
+             xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!--Colours-->
+        <SolidColorBrush x:Key="Background1">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="Background2">#DCD6D6</SolidColorBrush>
+    </Application.Resources>
+</Application>
