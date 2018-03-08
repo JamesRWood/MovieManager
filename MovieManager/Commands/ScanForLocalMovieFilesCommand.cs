@@ -1,9 +1,9 @@
 ﻿namespace MovieManager.Commands
 {
-    using System;
-    using System.Windows.Input;
     using MovieManager.Contracts.Commands;
     using MovieManager.Contracts.Controllers;
+    using System;
+    using System.Windows.Input;
 
     public class ScanForLocalMovieFilesCommand : IScanForLocalMovieFilesCommand
     {

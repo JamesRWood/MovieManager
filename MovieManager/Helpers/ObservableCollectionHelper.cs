@@ -1,8 +1,8 @@
-﻿namespace MovieManager
-{
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
+namespace MovieManager.Helpers
+{
     public static class ObservableCollectionHelper
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list)

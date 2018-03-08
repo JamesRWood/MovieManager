@@ -1,13 +1,12 @@
-﻿using MovieManager.Commands;
-using MovieManager.Contracts.Commands;
-
-namespace MovieManager
+﻿namespace MovieManager
 {
     using Autofac;
     using Contracts;
     using Contracts.Controllers;
     using Contracts.Queries;
     using Controllers;
+    using MovieManager.Commands;
+    using MovieManager.Contracts.Commands;
     using Queries;
     using ViewModels;
 
