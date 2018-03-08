@@ -1,10 +1,10 @@
 ﻿namespace MovieManager.Contracts
 {
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using Models;
 
     public interface IDashboardViewModel
     {
-        IList<Movie> Movies { get; }
+        ObservableCollection<Movie> Movies { get; }
     }
 }

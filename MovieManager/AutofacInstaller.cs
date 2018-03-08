@@ -23,6 +23,7 @@ namespace MovieManager
             builder.RegisterType<CommonDataViewModel>().As<ICommonDataViewModel>().InstancePerLifetimeScope();
 
             // Controllers
+            builder.RegisterType<FileController>().As<IFileController>().InstancePerLifetimeScope();
             builder.RegisterType<MovieController>().As<IMovieController>().InstancePerLifetimeScope();
 
             // Commands
