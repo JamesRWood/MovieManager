@@ -1,12 +1,12 @@
 ﻿namespace MovieManager.ViewModels
 {
+    using System.Collections.ObjectModel;
+    using System.Windows.Input;
     using Autofac;
     using Contracts;
     using Contracts.Controllers;
     using Models;
     using MovieManager.Contracts.Commands;
-    using System.Collections.Generic;
-    using System.Windows.Input;
 
     public class DashboardViewModel : IDashboardViewModel
     {
@@ -21,10 +21,10 @@
 
             var movieController = AutofacInstaller.Container.Resolve<IMovieController>();
 
-            Movies = movieController.GetMovieDataFromLocalLibraryFile();
+            Movies = movieController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
         }
 
-        public IList<Movie> Movies { get; set; }
+        public ObservableCollection<Movie> Movies { get; set; }
 
         public ICommand ScanForLocalMovieFilesCommand => _scanForLocalMovieFilesCommand.Command;
     }

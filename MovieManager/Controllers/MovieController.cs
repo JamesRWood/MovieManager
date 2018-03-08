@@ -44,53 +44,10 @@
             }
 
             var jsonData = serializer.Deserialize<List<Movie>>(new JsonTextReader(new StreamReader(movieLibraryFilePath)));
-            jsonData.ForEach(x => movies.Add(x));
+            jsonData?.ForEach(x => movies.Add(x));
 
             return movies;
         }
-
-        //public IList<Movie> GetAllLocalMovies()
-        //{
-        //    var movies = new List<Movie>();
-        //    var mainDirectory = ConfigurationManager.AppSettings["Directory"];
-
-        //    if (mainDirectory == "c:")
-        //    {
-        //        return movies;
-        //    }
-
-        //    var rootFiles = Directory.GetFiles(mainDirectory);
-        //    foreach (var file in rootFiles)
-        //    {
-        //        var fileInfo = new FileInfo(file);
-        //        if (_movieFileTypes.Any(x => fileInfo.Extension == x))
-        //        {
-        //            movies.Add(new Movie
-        //            {
-        //                Title = fileInfo.Name.Replace(fileInfo.Extension, ""),
-        //                FileLocation = fileInfo.FullName
-        //            });
-        //        }
-        //    }
-
-        //    foreach (var directory in Directory.GetDirectories(mainDirectory))
-        //    {
-        //        foreach (var file in Directory.GetFiles(directory))
-        //        {
-        //            var fileInfo = new FileInfo(file);
-        //            if (_movieFileTypes.Any(x => fileInfo.Extension == x))
-        //            {
-        //                movies.Add(new Movie
-        //                {
-        //                    Title = fileInfo.Name.Replace(fileInfo.Extension, ""),
-        //                    FileLocation = fileInfo.FullName
-        //                });
-        //            }
-        //        }
-        //    }
-
-        //    return movies;
-        //}
 
         public void StoreMovieData(IList<Movie> movies)
         {
@@ -101,7 +58,6 @@
             }
 
             var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
-
             if (!File.Exists(movieLibraryFilePath))
             {
                 using (var file = File.CreateText(movieLibraryFilePath))
@@ -112,7 +68,15 @@
             }
             else
             {
-
+                var storedMovieData = GetMovieDataFromLocalLibraryFile();
+                foreach (var mov in movies)
+                {
+                    var matchedRecord = storedMovieData.FirstOrDefault(x => x.Title == mov.Title);
+                    if (matchedRecord?.MovieId == null)
+                    {
+                        
+                    }
+                }
             }
         }
 

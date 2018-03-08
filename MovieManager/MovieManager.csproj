@@ -81,12 +81,15 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\ScanForLocalMovieFilesCommand.cs" />
     <Compile Include="Contracts\Commands\IScanForLocalMovieFilesCommand.cs" />
+    <Compile Include="Contracts\Controllers\IFileController.cs" />
     <Compile Include="Contracts\Controllers\IMovieController.cs" />
     <Compile Include="Contracts\ICommonDataViewModel.cs" />
     <Compile Include="Contracts\IDashboardViewModel.cs" />
     <Compile Include="Contracts\Queries\IQueryForMoviesByTitle.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Converters\ScreenResolutionToPageWidthConverter.cs" />
+    <Compile Include="ObservableCollectionHelper.cs" />
     <Compile Include="Queries\QueryForMovieById.cs" />
     <Compile Include="Queries\QueryForMoviesesByTitle.cs" />
     <Compile Include="ViewModels\CommonDataViewModel.cs" />
