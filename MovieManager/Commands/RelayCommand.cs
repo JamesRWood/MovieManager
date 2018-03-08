@@ -31,7 +31,7 @@
 
         public void Execute(object parameter)
         {
-            this.execute((T)parameter);
+            execute((T)parameter);
         }
     }
 }

@@ -1,31 +1,37 @@
 ﻿namespace MovieManager.ViewModels
 {
-    using System.Collections.ObjectModel;
-    using System.Windows.Input;
     using Autofac;
     using Contracts;
     using Contracts.Controllers;
-    using Models;
     using MovieManager.Contracts.Commands;
+    using MovieManager.Helpers;
+    using MovieManager.Models;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Windows.Input;
 
-    public class DashboardViewModel : IDashboardViewModel
+    public class DashboardViewModel : IDashboardViewModel, INotifyPropertyChanged
     {
-        private readonly ICommonDataViewModel _commonDataViewModel;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
+        private ObservableCollection<Movie> _movies;
 
         public DashboardViewModel()
         {
-            _commonDataViewModel = AutofacInstaller.Container.Resolve<ICommonDataViewModel>();
-
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
 
             var movieController = AutofacInstaller.Container.Resolve<IMovieController>();
 
-            Movies = movieController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
+            _movies = movieController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
         }
 
-        public ObservableCollection<Movie> Movies { get; set; }
+        public ObservableCollection<Movie> Movies
+        {
+            get => _movies;
+            set { PropertyChanged.ChangeAndNotify(ref _movies, value, () => Movies); }
+        }
 
         public ICommand ScanForLocalMovieFilesCommand => _scanForLocalMovieFilesCommand.Command;
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
