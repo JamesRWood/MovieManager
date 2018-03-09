@@ -1,10 +1,23 @@
 ﻿namespace MovieManager.ViewModels
 {
-    using MovieManager.Contracts;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using Helpers;
+    using Models;
+    using MovieManager.Contracts;
 
     public class CommonDataViewModel : ICommonDataViewModel
     {
-        public List<string> MovieFileTypes => new List<string> { ".mp4", ".avi" };
+        private List<Movie> _commonDataMovies;
+
+        public List<string> MovieFileTypes => new List<string> {".mp4", ".avi"};
+
+        public List<Movie> CommonDataMovies
+        {
+            get => _commonDataMovies ?? new List<Movie>();
+            set { PropertyChanged.ChangeAndNotify(ref _commonDataMovies, value, () => CommonDataMovies); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

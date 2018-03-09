@@ -19,9 +19,10 @@
             var builder = new ContainerBuilder();
 
             // Commondata class
-            builder.RegisterType<CommonDataViewModel>().As<ICommonDataViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<CommonDataViewModel>().As<ICommonDataViewModel>().SingleInstance();
 
             // Controllers
+            builder.RegisterType<ApiController>().As<IApiController>().InstancePerLifetimeScope();
             builder.RegisterType<FileController>().As<IFileController>().InstancePerLifetimeScope();
             builder.RegisterType<MovieController>().As<IMovieController>().InstancePerLifetimeScope();
 

@@ -18,7 +18,7 @@
             _commonData = commonData;
         }
 
-        public IList<Movie> FindLocalMovieFiles()
+        public List<Movie> FindLocalMovieFiles()
         {
             var movies = new List<Movie>();
             var mainDirectory = ConfigurationManager.AppSettings["Directory"];

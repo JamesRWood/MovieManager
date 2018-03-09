@@ -24,14 +24,14 @@
                 return false;
             }
 
+            field = value;
+
             if (body.Expression is ConstantExpression vmExpression)
             {
                 var sender = Expression.Lambda(vmExpression).Compile().DynamicInvoke();
-
                 handler?.Invoke(sender, new PropertyChangedEventArgs(body.Member.Name));
             }
-
-            field = value;
+            
             return true;
         }
     }

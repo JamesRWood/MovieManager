@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using MovieManager.Models;
-
-namespace MovieManager.Contracts
+﻿namespace MovieManager.Contracts
 {
-    public interface IDashboardViewModel
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using MovieManager.Models;
+
+    public interface IDashboardViewModel : INotifyPropertyChanged
     {
         ObservableCollection<Movie> Movies { get; set; }
     }
