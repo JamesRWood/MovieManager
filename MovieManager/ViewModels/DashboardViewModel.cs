@@ -10,18 +10,22 @@
     using System.ComponentModel;
     using System.Windows.Input;
 
-    public class DashboardViewModel : IDashboardViewModel, INotifyPropertyChanged
+    public class DashboardViewModel : IDashboardViewModel
     {
+        private readonly ICommonDataViewModel _commonData;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
         private ObservableCollection<Movie> _movies;
 
         public DashboardViewModel()
         {
+            _commonData = AutofacInstaller.Container.Resolve<ICommonDataViewModel>();
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
 
             var movieController = AutofacInstaller.Container.Resolve<IMovieController>();
 
             _movies = movieController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
+
+            _commonData.PropertyChanged += CommonDataPropertyChanged;
         }
 
         public ObservableCollection<Movie> Movies
@@ -33,5 +37,17 @@
         public ICommand ScanForLocalMovieFilesCommand => _scanForLocalMovieFilesCommand.Command;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void CommonDataPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "CommonDataMovies":
+                    Movies = _commonData.CommonDataMovies.ToObservableCollection();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

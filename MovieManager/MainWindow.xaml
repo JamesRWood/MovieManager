@@ -23,7 +23,7 @@
                 <Border.Effect>
                     <DropShadowEffect />
                 </Border.Effect>
-                <Grid Column="1" Background="{StaticResource LightGrey}">
+                <Grid Column="1" Background="{StaticResource DarkGrey}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
@@ -47,7 +47,7 @@
                                 <ColumnDefinition Width="8*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Column="0" Name="TitleListContainer">
-                                <ListView ItemsSource="{Binding Movies}" Background="{StaticResource LightGrey}">
+                                <ListView ItemsSource="{Binding Movies}" Background="{StaticResource DarkGrey}">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}"/>

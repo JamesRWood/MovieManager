@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Models;
 
-    public interface IFileController
+    public interface IApiController
     {
-        List<Movie> FindLocalMovieFiles();
+        List<Movie> EnrichMoviesMatchedByTitle(List<Movie> movies);
     }
 }

@@ -15,7 +15,6 @@
         private readonly IQueryForMovieById _queryForMovieById;
 
         private const string MovieDataFileName = "MovieLibraryData.json";
-        private readonly List<string> _movieFileTypes = new List<string> { ".mp4", ".avi" };
 
         public MovieController(
             IQueryForMoviesByTitle queryForMoviesByTitle, 
@@ -89,26 +88,5 @@
         {
             return _queryForMovieById.Execute(id);
         }
-
-        //private Movie EnrichMovieModel(Movie movie)
-        //{
-        //    var mainDirectory = ConfigurationManager.AppSettings["Directory"];
-        //    if (mainDirectory == "c:")
-        //    {
-        //        return movie;
-        //    }
-
-        //    var serializer = new JsonSerializer();
-        //    var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
-        //    var jsonData = serializer.Deserialize<List<Movie>>(new JsonTextReader(new StreamReader(movieLibraryFilePath)));
-
-        //    var jsonMovieRecord = jsonData?.FirstOrDefault(x => x.Title == movie.Title);
-        //    if (jsonMovieRecord == null)
-        //    {
-        //        return _queryForMoviesByTitle.Execute(movie.Title).FirstOrDefault();
-        //    }
-
-        //    return movie;
-        //}
     }
 }
