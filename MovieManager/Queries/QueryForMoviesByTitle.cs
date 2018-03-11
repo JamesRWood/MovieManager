@@ -8,11 +8,11 @@
     using DM.MovieApi.MovieDb.Movies;
     using Movie = Models.Movie;
 
-    public class QueryForMoviesesByTitle : IQueryForMoviesByTitle
+    public class QueryForMoviesByTitle : IQueryForMoviesByTitle
     {
         private readonly IQueryForMovieById _queryForMovieById;
 
-        public QueryForMoviesesByTitle(IQueryForMovieById queryForMovieById)
+        public QueryForMoviesByTitle(IQueryForMovieById queryForMovieById)
         {
             _queryForMovieById = queryForMovieById;
         }

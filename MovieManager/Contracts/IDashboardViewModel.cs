@@ -7,5 +7,7 @@
     public interface IDashboardViewModel : INotifyPropertyChanged
     {
         ObservableCollection<Movie> Movies { get; set; }
+
+        Movie SelectedMovie { get; set; }
     }
 }
