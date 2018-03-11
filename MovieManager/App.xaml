@@ -28,6 +28,7 @@
         
         <!--Converters-->
         <converters:ScreenResolutionToPageWidthConverter x:Key="ScreenResolutionToPageWidthConverter"/>
+        <converters:ImagePathConverter x:Key="ImagePathConverter"/>
         
         <!--Styles-->
         <Style TargetType="GridViewColumnHeader">

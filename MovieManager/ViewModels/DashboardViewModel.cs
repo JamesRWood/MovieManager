@@ -15,23 +15,31 @@
         private readonly ICommonDataViewModel _commonData;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
         private ObservableCollection<Movie> _movies;
+        private Movie _selectedMovie;
 
         public DashboardViewModel()
         {
             _commonData = AutofacInstaller.Container.Resolve<ICommonDataViewModel>();
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
 
-            var movieController = AutofacInstaller.Container.Resolve<IMovieController>();
+            var fileController = AutofacInstaller.Container.Resolve<IFileController>();
 
-            _movies = movieController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
+            _movies = fileController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
 
             _commonData.PropertyChanged += CommonDataPropertyChanged;
+            PropertyChanged += DashboardViewModelPropertyChanged;
         }
 
         public ObservableCollection<Movie> Movies
         {
             get => _movies;
             set { PropertyChanged.ChangeAndNotify(ref _movies, value, () => Movies); }
+        }
+
+        public Movie SelectedMovie
+        {
+            get => _selectedMovie;
+            set { PropertyChanged.ChangeAndNotify(ref _selectedMovie, value, () => SelectedMovie); }
         }
 
         public ICommand ScanForLocalMovieFilesCommand => _scanForLocalMovieFilesCommand.Command;
@@ -44,6 +52,17 @@
             {
                 case "CommonDataMovies":
                     Movies = _commonData.CommonDataMovies.ToObservableCollection();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void DashboardViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "SelectedMovie":
                     break;
                 default:
                     break;

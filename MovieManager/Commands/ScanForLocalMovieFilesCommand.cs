@@ -1,28 +1,30 @@
 ﻿namespace MovieManager.Commands
 {
-    using System;
-    using System.Windows.Input;
     using Contracts;
     using MovieManager.Contracts.Commands;
     using MovieManager.Contracts.Controllers;
+    using MovieManager.Models;
+    using System;
+    using System.Collections.Concurrent;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Input;
 
     public class ScanForLocalMovieFilesCommand : IScanForLocalMovieFilesCommand
     {
         private readonly ICommonDataViewModel _commonData;
         private readonly IApiController _apiController;
         private readonly IFileController _fileController;
-        private readonly IMovieController _movieController;
+        private readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 8 };
         private ICommand _command;
         
         public ScanForLocalMovieFilesCommand(
             ICommonDataViewModel commonData,
             IApiController apiController,
-            IMovieController movieController, 
             IFileController fileController)
         {
             _commonData = commonData;
             _apiController = apiController;
-            _movieController = movieController;
             _fileController = fileController;
         }
 
@@ -36,14 +38,16 @@
         public void Execute(object parameter)
         {
             var movies = _fileController.FindLocalMovieFiles();
-            var updatedMovieList = _apiController.EnrichMoviesMatchedByTitle(movies);
 
-            if (updatedMovieList.Count > 0)
+            var concurrentMovieList = new ConcurrentBag<Movie>();
+            Parallel.ForEach(movies, _parallelOptions, m =>
             {
-                _movieController.StoreMovieData(updatedMovieList);
-            }
-
-            _commonData.CommonDataMovies = updatedMovieList;
+                var mov = _apiController.EnrichMovieMatchedByTitle(m);
+                concurrentMovieList.Add(mov);
+            });
+            
+            _commonData.CommonDataMovies = concurrentMovieList.OrderBy(x => x.Title).ToList();
+            _fileController.StoreMovieData(concurrentMovieList.ToList());
         }
 
         public event EventHandler CanExecuteChanged;

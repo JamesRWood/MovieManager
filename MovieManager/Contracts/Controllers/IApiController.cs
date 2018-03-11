@@ -5,6 +5,8 @@
 
     public interface IApiController
     {
-        List<Movie> EnrichMoviesMatchedByTitle(List<Movie> movies);
+        //List<Movie> EnrichMoviesMatchedByTitle(List<Movie> movies);
+
+        Movie EnrichMovieMatchedByTitle(Movie movie);
     }
 }

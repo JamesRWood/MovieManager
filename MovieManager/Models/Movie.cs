@@ -20,6 +20,6 @@
 
         public string TagLine { get; set; }
 
-        public int? RuntTime { get; set; }
+        public int? RunTime { get; set; }
     }
 }

@@ -24,14 +24,13 @@
             // Controllers
             builder.RegisterType<ApiController>().As<IApiController>().InstancePerLifetimeScope();
             builder.RegisterType<FileController>().As<IFileController>().InstancePerLifetimeScope();
-            builder.RegisterType<MovieController>().As<IMovieController>().InstancePerLifetimeScope();
 
             // Commands
             builder.RegisterType<ScanForLocalMovieFilesCommand>().As<IScanForLocalMovieFilesCommand>().InstancePerLifetimeScope();
 
             // Queries
             builder.RegisterType<QueryForMovieById>().As<IQueryForMovieById>().InstancePerLifetimeScope();
-            builder.RegisterType<QueryForMoviesesByTitle>().As<IQueryForMoviesByTitle>().InstancePerLifetimeScope();
+            builder.RegisterType<QueryForMoviesByTitle>().As<IQueryForMoviesByTitle>().InstancePerLifetimeScope();
 
             // ViewModels
             builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
