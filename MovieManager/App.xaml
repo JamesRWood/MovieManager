@@ -7,9 +7,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Colours-->
-        <SolidColorBrush x:Key="DarkGrey">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="DarkGrey1">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="DarkGrey2">#2D2D2D</SolidColorBrush>
         <SolidColorBrush x:Key="Grey">#6C6A69</SolidColorBrush>
         <SolidColorBrush x:Key="LightGrey">#DCD6D6</SolidColorBrush>
+        <SolidColorBrush x:Key="TmdbPrimary">#01d277</SolidColorBrush>
 
         <SolidColorBrush x:Key="LightGreen">#01CF0B</SolidColorBrush>
         
@@ -18,7 +20,7 @@
                      Viewport="0,0,5,5" ViewportUnits="Absolute"
                      Viewbox="0,0,5,5" ViewboxUnits="Absolute">
             <VisualBrush.Visual>
-                <Grid Background="{StaticResource DarkGrey}">
+                <Grid Background="{StaticResource DarkGrey1}">
                     <Path Data="M 0 5 L 5 0 M -2 2 L 2 -2 M 3 7 L 7 3"
                           Stroke="{StaticResource Grey}" StrokeEndLineCap="Square"
                           RenderOptions.EdgeMode="Aliased" />
@@ -30,24 +32,25 @@
         <converters:ScreenResolutionToPageWidthConverter x:Key="ScreenResolutionToPageWidthConverter"/>
         <converters:ImagePathConverter x:Key="ImagePathConverter"/>
         <converters:MovieSynopsisHasValueToVisibilityConverter x:Key="StringHasValueToVisibilityConverter"/>
+        <converters:TextToGeometryConverter x:Key="TextToGeometryConverter"/>
         
         <!--Styles-->
         <Style TargetType="GridViewColumnHeader">
             <Setter Property="IsEnabled" Value="False"/>
             <Setter Property="Background" Value="{StaticResource LightGrey}"/>
-            <Setter Property="Foreground" Value="{StaticResource DarkGrey}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkGrey1}"/>
             <Setter Property="FontFamily" Value="Rockwell Nova"/>
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
-        <Style TargetType="ListView">
+        <!--<Style TargetType="ListView">
             <Setter Property="BorderThickness" Value="0"/>
-        </Style>
+        </Style>-->
 
         <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource DarkGrey}"/>
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{StaticResource LightGrey}"/>
@@ -71,7 +74,7 @@
             <Setter Property="FontSize" Value="80"/>
             <Setter Property="FontWeight" Value="ExtraBold"/>
             <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="Foreground" Value="{StaticResource DarkGrey}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkGrey1}"/>
         </Style>
 
         <Style x:Key="MovieHeaderStyle1" TargetType="{x:Type TextBlock}">
@@ -125,11 +128,25 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="#DCD6D6"/>
+            <Setter Property="Foreground" Value="#2D2D2D"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="Foreground" Value="#01d277"/>
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="GridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

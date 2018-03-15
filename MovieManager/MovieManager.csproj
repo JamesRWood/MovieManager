@@ -91,6 +91,7 @@
     <Compile Include="Converters\ImagePathConverter.cs" />
     <Compile Include="Converters\ScreenResolutionToPageWidthConverter.cs" />
     <Compile Include="Converters\MovieSynopsisHasValueToVisibilityConverter.cs" />
+    <Compile Include="Converters\TextToGeometryConverter.cs" />
     <Compile Include="Helpers\ObservableCollectionHelper.cs" />
     <Compile Include="Helpers\PropertyChangedHelper.cs" />
     <Compile Include="Queries\QueryForMovieById.cs" />
