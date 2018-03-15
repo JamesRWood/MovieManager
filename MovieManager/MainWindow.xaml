@@ -28,17 +28,37 @@
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="10*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Column="1">
-                    <StackPanel Grid.Row="0">
-                        <TextBlock Text="{Binding SelectedMovie.Title}" Style="{StaticResource MovieTitleStyle}"/>
-                    </StackPanel>
+                <Grid Column="0">
+                    <Image HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Source="https://www.themoviedb.org/static_cache/v4/logos/408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99.png"/>
+                </Grid>
+                <Grid Column="1" Name="MovieTitleContainer">
+                    <Rectangle Margin="18, 20, 0, 10" Width="{Binding ActualWidth, ElementName=MovieTitleContainer}">
+                        <Rectangle.Effect>
+                            <DropShadowEffect BlurRadius="6" ShadowDepth="3" Direction="90" Opacity="0.8" Color="Black" RenderingBias="Quality"/>
+                        </Rectangle.Effect>
+                        <Rectangle.Fill>
+                            <DrawingBrush Stretch="Uniform" AlignmentX="Left" AlignmentY="Center">
+                                <DrawingBrush.Drawing>
+                                    <GeometryDrawing Geometry="{Binding SelectedMovie.Title, Converter={StaticResource TextToGeometryConverter}}" Brush="Transparent">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Thickness="0.5" Brush="{StaticResource TmdbPrimary}"/>
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <!--<StackPanel Grid.Row="0">
+                        <TextBlock Text="{Binding SelectedMovie.Title}" Style="{StaticResource MovieTitleStyle}" />
+                    </StackPanel>-->
                 </Grid>
             </Grid>
             <Border Grid.Row="1">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" Opacity="0.6" Direction="90" ShadowDepth="5" BlurRadius="20" RenderingBias="Quality" />
                 </Border.Effect>
-                <Grid Column="1" Background="{StaticResource DarkGrey}">
+                <Grid Column="1" Background="{StaticResource DarkGrey1}">
                     <Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -58,7 +78,9 @@
                                     <ListView ItemsSource="{Binding Movies}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}">
                                         <ListView.View>
                                             <GridView>
-                                                <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}">
+                                                    <GridViewColumnHeader Style="{StaticResource GridViewColumnHeaderStyle}">Title</GridViewColumnHeader>
+                                                </GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
