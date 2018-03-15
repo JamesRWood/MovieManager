@@ -15,7 +15,7 @@
             }
 
             path = path.StartsWith("\\") ? path.Substring(1) : path;
-            var uri = new Uri("https://image.tmdb.org/t/p/w500" + path);
+            var uri = new Uri("https://image.tmdb.org/t/p/w780" + path);
             return uri;
 
         }
