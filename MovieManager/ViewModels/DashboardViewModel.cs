@@ -1,26 +1,37 @@
 ﻿namespace MovieManager.ViewModels
 {
-    using Autofac;
-    using Contracts;
-    using Contracts.Controllers;
-    using MovieManager.Contracts.Commands;
-    using MovieManager.Helpers;
-    using MovieManager.Models;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Threading.Tasks;
     using System.Windows.Input;
+    using Autofac;
+    using Contracts.Commands;
+    using Contracts.Commands.RelayCommands;
+    using Contracts.Controllers;
+    using Contracts.Queries;
+    using Contracts.ViewModels;
+    using MovieManager.Helpers;
+    using MovieManager.Models;
 
     public class DashboardViewModel : IDashboardViewModel
     {
         private readonly ICommonDataViewModel _commonData;
+        private readonly IFindMovieDetailsViewModel _findMovieDetailsViewModel;
+        private readonly IQueryForMoviesByTitle _queryForMoviesByTitle;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
+        private readonly IOpenWindowCommand _openFindMovieDetailsWindow;
+        private readonly IFileController _fileController;
         private ObservableCollection<Movie> _movies;
         private Movie _selectedMovie;
 
         public DashboardViewModel()
         {
             _commonData = AutofacInstaller.Container.Resolve<ICommonDataViewModel>();
+            _findMovieDetailsViewModel = AutofacInstaller.Container.Resolve<IFindMovieDetailsViewModel>();
+            _queryForMoviesByTitle = AutofacInstaller.Container.Resolve<IQueryForMoviesByTitle>();
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
+            _openFindMovieDetailsWindow = AutofacInstaller.Container.Resolve<IOpenWindowCommand>();
+            _fileController = AutofacInstaller.Container.Resolve<IFileController>();
 
             var fileController = AutofacInstaller.Container.Resolve<IFileController>();
 
@@ -63,6 +74,12 @@
             switch (e.PropertyName)
             {
                 case "SelectedMovie":
+                    if (SelectedMovie.MovieId == null && SelectedMovie != _findMovieDetailsViewModel.SelectedMovie)
+                    {
+                        _findMovieDetailsViewModel.SelectedMovie = SelectedMovie;
+                        _findMovieDetailsViewModel.PossibleMatches = Task.Run(() => _queryForMoviesByTitle.Execute(SelectedMovie.Title)).Result.ToObservableCollection();
+                        SelectedMovie = _openFindMovieDetailsWindow.OpenWindow(_commonData, _findMovieDetailsViewModel, _fileController);
+                    }
                     break;
                 default:
                     break;

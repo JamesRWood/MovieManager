@@ -1,4 +1,4 @@
-﻿namespace MovieManager.Contracts.Commands
+﻿namespace MovieManager.Contracts.Commands.RelayCommands
 {
     using System.Windows.Input;
 

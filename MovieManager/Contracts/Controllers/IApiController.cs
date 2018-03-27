@@ -1,12 +1,10 @@
 ﻿namespace MovieManager.Contracts.Controllers
 {
-    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Models;
 
     public interface IApiController
     {
-        //List<Movie> EnrichMoviesMatchedByTitle(List<Movie> movies);
-
-        Movie EnrichMovieMatchedByTitle(Movie movie);
+        Task<Movie> EnrichMovieMatchedByTitle(Movie movie);
     }
 }

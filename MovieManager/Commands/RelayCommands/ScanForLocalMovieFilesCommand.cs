@@ -1,14 +1,15 @@
-﻿namespace MovieManager.Commands
+﻿namespace MovieManager.Commands.RelayCommands
 {
-    using Contracts;
-    using MovieManager.Contracts.Commands;
-    using MovieManager.Contracts.Controllers;
-    using MovieManager.Models;
     using System;
     using System.Collections.Concurrent;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
+    using Contracts;
+    using Contracts.Commands.RelayCommands;
+    using Contracts.Controllers;
+    using Contracts.ViewModels;
+    using Models;
 
     public class ScanForLocalMovieFilesCommand : IScanForLocalMovieFilesCommand
     {
@@ -42,8 +43,8 @@
             var concurrentMovieList = new ConcurrentBag<Movie>();
             Parallel.ForEach(movies, _parallelOptions, m =>
             {
-                var mov = _apiController.EnrichMovieMatchedByTitle(m);
-                concurrentMovieList.Add(mov);
+                    var mov = Task.Run(() => _apiController.EnrichMovieMatchedByTitle(m)).Result;
+                    concurrentMovieList.Add(mov);
             });
             
             _commonData.CommonDataMovies = concurrentMovieList.OrderBy(x => x.Title).ToList();
