@@ -20,7 +20,6 @@
         private readonly IQueryForMoviesByTitle _queryForMoviesByTitle;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
         private readonly IOpenWindowCommand _openFindMovieDetailsWindow;
-        private readonly IFileController _fileController;
         private ObservableCollection<Movie> _movies;
         private Movie _selectedMovie;
 
@@ -31,7 +30,6 @@
             _queryForMoviesByTitle = AutofacInstaller.Container.Resolve<IQueryForMoviesByTitle>();
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
             _openFindMovieDetailsWindow = AutofacInstaller.Container.Resolve<IOpenWindowCommand>();
-            _fileController = AutofacInstaller.Container.Resolve<IFileController>();
 
             var fileController = AutofacInstaller.Container.Resolve<IFileController>();
 
@@ -78,7 +76,7 @@
                     {
                         _findMovieDetailsViewModel.SelectedMovie = SelectedMovie;
                         _findMovieDetailsViewModel.PossibleMatches = Task.Run(() => _queryForMoviesByTitle.Execute(SelectedMovie.Title)).Result.ToObservableCollection();
-                        SelectedMovie = _openFindMovieDetailsWindow.OpenWindow(_commonData, _findMovieDetailsViewModel, _fileController);
+                        SelectedMovie = _openFindMovieDetailsWindow.OpenWindow();
                     }
                     break;
                 default:

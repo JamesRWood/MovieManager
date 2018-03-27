@@ -1,8 +1,6 @@
 ﻿namespace MovieManager
 {
-    using System.Windows;
     using Autofac;
-    using Autofac.Core;
     using Commands;
     using Commands.RelayCommands;
     using Contracts.Commands;

@@ -7,31 +7,42 @@
 
     public class OpenWindowCommand : IOpenWindowCommand
     {
-        public Movie OpenWindow(
-            ICommonDataViewModel commonData, 
+        private readonly ICommonDataViewModel _commonData;
+        private readonly IFindMovieDetailsViewModel _viewModel;
+        private readonly IFileController _fileController;
+
+        public OpenWindowCommand(
+            ICommonDataViewModel commonData,
             IFindMovieDetailsViewModel viewModel,
             IFileController fileController)
         {
+            _commonData = commonData;
+            _viewModel = viewModel;
+            _fileController = fileController;
+        }
+
+        public Movie OpenWindow()
+        {
             var window = new FindMovieDetails
             {
-                DataContext = viewModel
+                DataContext = _viewModel
             };
 
             window.ShowDialog();
 
-            if (viewModel.SelectedMatchedMovie == null)
+            if (_viewModel.SelectedMatchedMovie == null)
             {
-                return viewModel.SelectedMovie;
+                return _viewModel.SelectedMovie;
             }
 
-            var movies = commonData.CommonDataMovies;
-            movies.Remove(viewModel.SelectedMovie);
-            movies.Add(viewModel.SelectedMatchedMovie);
+            var movies = _commonData.CommonDataMovies;
+            movies.Remove(_viewModel.SelectedMovie);
+            movies.Add(_viewModel.SelectedMatchedMovie);
 
-            commonData.CommonDataMovies = movies;
-            fileController.StoreMovieData(movies);
+            _commonData.CommonDataMovies = movies;
+            _fileController.StoreMovieData(movies);
 
-            return viewModel.SelectedMatchedMovie;
+            return _viewModel.SelectedMatchedMovie;
         }
     }
 }
