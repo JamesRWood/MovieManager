@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel;
+    using Contracts.ViewModels;
     using Helpers;
     using Models;
     using MovieManager.Contracts;

@@ -17,18 +17,18 @@
             _queryForMovieById = queryForMovieById;
         }
 
-        public List<Movie> Execute(string title)
+        public async Task<List<Movie>> Execute(string title)
         {
             var api = MovieDbFactory.Create<IApiMovieRequest>().Value;
-            var response = Task.Run(() => api.SearchByTitleAsync(title));
+            var response = await api.SearchByTitleAsync(title);
 
             var movies = new List<Movie>();
-            if (response.Result.TotalResults <= 0)
+            if (response.TotalResults <= 0)
             {
                 return movies;
             }
 
-            movies.AddRange(response.Result.Results.Select(x => _queryForMovieById.Execute(x.Id)));
+            movies.AddRange(response.Results.Select(x => _queryForMovieById.Execute(x.Id)));
 
             return movies;
         }

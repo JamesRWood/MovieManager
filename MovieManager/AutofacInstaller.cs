@@ -1,12 +1,16 @@
 ﻿namespace MovieManager
 {
+    using System.Windows;
     using Autofac;
-    using Contracts;
+    using Autofac.Core;
+    using Commands;
+    using Commands.RelayCommands;
+    using Contracts.Commands;
+    using Contracts.Commands.RelayCommands;
     using Contracts.Controllers;
     using Contracts.Queries;
+    using Contracts.ViewModels;
     using Controllers;
-    using MovieManager.Commands;
-    using MovieManager.Contracts.Commands;
     using Queries;
     using ViewModels;
 
@@ -34,6 +38,10 @@
 
             // ViewModels
             builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<FindMovieDetailsViewModel>().As<IFindMovieDetailsViewModel>().InstancePerLifetimeScope();
+
+            // Open window commands
+            builder.RegisterType<OpenWindowCommand>().As<IOpenWindowCommand>().InstancePerLifetimeScope();
 
             Container = builder.Build();
         }

@@ -1,15 +1,15 @@
 ﻿namespace MovieManager.Controllers
 {
-    using Contracts;
-    using Contracts.Controllers;
-    using Models;
-    using Newtonsoft.Json;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using Contracts.Controllers;
+    using Contracts.ViewModels;
+    using Models;
+    using Newtonsoft.Json;
 
     public class FileController : IFileController
     {
@@ -98,25 +98,10 @@
             }
 
             var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
-            if (!File.Exists(movieLibraryFilePath))
+            using (var file = File.CreateText(movieLibraryFilePath))
             {
-                using (var file = File.CreateText(movieLibraryFilePath))
-                {
-                    var serializer = new JsonSerializer();
-                    serializer.Serialize(file, movies);
-                }
-            }
-            else
-            {
-                var storedMovieData = GetMovieDataFromLocalLibraryFile();
-                foreach (var mov in movies)
-                {
-                    var matchedRecord = storedMovieData.FirstOrDefault(x => x.Title == mov.Title);
-                    if (matchedRecord?.MovieId == null)
-                    {
-
-                    }
-                }
+                var serializer = new JsonSerializer();
+                serializer.Serialize(file, movies);
             }
         }
 

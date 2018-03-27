@@ -1,10 +1,9 @@
-﻿namespace MovieManager.Contracts
+﻿namespace MovieManager.Contracts.ViewModels
 {
     using System.Collections.Generic;
-    using System.ComponentModel;
     using Models;
 
-    public interface ICommonDataViewModel : INotifyPropertyChanged
+    public interface ICommonDataViewModel : IViewModel
     {
         List<string> MovieFileTypes { get; }
 
