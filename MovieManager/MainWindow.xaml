@@ -79,7 +79,7 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}">
-                                                    <GridViewColumnHeader Style="{StaticResource GridViewColumnHeaderStyle}">Title</GridViewColumnHeader>
+                                                    <GridViewColumnHeader Style="{StaticResource GridViewColumnHeaderStyle}" Content="Title" FontSize="36" HorizontalContentAlignment="Left" Padding="10,0,0,0" BorderThickness="0" BorderBrush="{StaticResource DarkGrey1}"/>
                                                 </GridViewColumn>
                                             </GridView>
                                         </ListView.View>
@@ -106,6 +106,7 @@
                                                 <RowDefinition Height="2*"/>
                                                 <RowDefinition Height="2*"/>
                                                 <RowDefinition Height="10*"/>
+                                                <RowDefinition Height="2*"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <StackPanel Grid.Row="0">
@@ -116,6 +117,16 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="2">
                                                 <TextBlock Text="{Binding SelectedMovie.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="3">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Grid.Column="0" Content="Play" Style="{StaticResource ButtonStyle}" Command="{Binding PlayMovieCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource StringHasValueToVisibilityConverter}}"/>
+                                                    <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding EditMovieSettingsCommand}" CommandParameter="{Binding SelectedMovie.Tit}" Visibility="{Binding SelectedMovie, Converter={StaticResource StringHasValueToVisibilityConverter}}"/>
+                                                </Grid>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Column="1">

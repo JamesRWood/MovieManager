@@ -1,16 +1,16 @@
 ﻿namespace MovieManager
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Input;
     using Autofac;
     using Commands;
-    using Commands.RelayCommands;
     using Contracts.Commands;
-    using Contracts.Commands.RelayCommands;
     using Contracts.Controllers;
     using Contracts.Queries;
     using Contracts.ViewModels;
     using Controllers;
-    using Queries;
-    using ViewModels;
 
     public static class AutofacInstaller
     {
@@ -20,28 +20,28 @@
         {
             var builder = new ContainerBuilder();
 
-            // Commondata class
-            builder.RegisterType<CommonDataViewModel>().As<ICommonDataViewModel>().SingleInstance();
-
             // Controllers
             builder.RegisterType<ApiController>().As<IApiController>().InstancePerLifetimeScope();
             builder.RegisterType<FileController>().As<IFileController>().InstancePerLifetimeScope();
 
             // Commands
-            builder.RegisterType<ScanForLocalMovieFilesCommand>().As<IScanForLocalMovieFilesCommand>().InstancePerLifetimeScope();
+            RegisterType(typeof(ICommand), builder);
 
             // Queries
-            builder.RegisterType<QueryForMovieById>().As<IQueryForMovieById>().InstancePerLifetimeScope();
-            builder.RegisterType<QueryForMoviesByTitle>().As<IQueryForMoviesByTitle>().InstancePerLifetimeScope();
+            RegisterType(typeof(IQueryBase), builder);
 
             // ViewModels
-            builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<FindMovieDetailsViewModel>().As<IFindMovieDetailsViewModel>().InstancePerLifetimeScope();
-
-            // Open window commands
-            builder.RegisterType<OpenWindowCommand>().As<IOpenWindowCommand>().InstancePerLifetimeScope();
+            RegisterType(typeof(IViewModel), builder);
 
             Container = builder.Build();
+        }
+
+        private static void RegisterType<T>(T typeToRegister, ContainerBuilder builder) where T : Type
+        {
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                   .Where(t => t.GetTypeInfo().ImplementedInterfaces.Any(i => i == typeToRegister))
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
         }
     }
 }

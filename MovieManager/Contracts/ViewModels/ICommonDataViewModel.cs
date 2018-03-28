@@ -5,7 +5,7 @@
 
     public interface ICommonDataViewModel : IViewModel
     {
-        List<string> MovieFileTypes { get; }
+        Movie CommonDataSelectedMovie { get; set; }
 
         List<Movie> CommonDataMovies { get; set; }
     }

@@ -7,19 +7,12 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts.Controllers;
-    using Contracts.ViewModels;
     using Models;
     using Newtonsoft.Json;
 
     public class FileController : IFileController
     {
-        private readonly ICommonDataViewModel _commonData;
         private const string MovieDataFileName = "MovieLibraryData.json";
-
-        public FileController(ICommonDataViewModel commonData)
-        {
-            _commonData = commonData;
-        }
 
         public IList<Movie> GetMovieDataFromLocalLibraryFile()
         {
@@ -60,7 +53,7 @@
             Parallel.ForEach(Directory.GetFiles(mainDirectory), parallelOptions, file =>
             {
                 var fileInfo = new FileInfo(file);
-                if (_commonData.MovieFileTypes.Any(x => fileInfo.Extension == x))
+                if (Core.MovieFileTypes.Any(x => fileInfo.Extension == x))
                 {
                     movies.Add(new Movie
                     {
@@ -75,7 +68,7 @@
                 Parallel.ForEach(Directory.GetFiles(directory), parallelOptions, file =>
                 {
                     var fileInfo = new FileInfo(file);
-                    if (_commonData.MovieFileTypes.Any(x => fileInfo.Extension == x))
+                    if (Core.MovieFileTypes.Any(x => fileInfo.Extension == x))
                     {
                         movies.Add(new Movie
                         {
