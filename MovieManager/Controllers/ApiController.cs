@@ -3,6 +3,7 @@
     using Contracts.Controllers;
     using MovieManager.Contracts.Queries;
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -24,7 +25,6 @@
 
         public async Task<Movie> EnrichMovieMatchedByTitle(Movie movie)
         {
-            const string dateTagRegex = @"\s\[[0-9]{4}\]|\[[0-9]{4}\]|\s\([0-9]{4}\)|\([0-9]{4}\)|\s[0-9]{4}";
             var possibleMatches = await GetPossibleMatchesFromApi(movie.Title);
 
             if (possibleMatches.Count < 1)
@@ -32,7 +32,7 @@
                 return movie;
             }
 
-            var formattedTitle = Regex.Replace(movie.Title, dateTagRegex, string.Empty).Trim();
+            var formattedTitle = Regex.Replace(movie.Title, Core.DateTagRegex, string.Empty).Trim();
             if (possibleMatches.Count(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase)) == 1)
             {
                 var match = possibleMatches.FirstOrDefault(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase));
@@ -53,9 +53,9 @@
             return movie;
         }
 
-        private async Task<List<Movie>> GetPossibleMatchesFromApi(string title)
+        public async Task<List<Movie>> GetPossibleMatchesFromApi(string title)
         {
-            var possibleMatches = new List<Movie>();
+            var possibleMatches = new ConcurrentBag<Movie>();
             var matches = await _queryForMoviesByTitle.Execute(title);
 
             foreach (var match in matches)
@@ -66,7 +66,7 @@
                 }
             }
 
-            return possibleMatches;
+            return possibleMatches.ToList();
         }
     }
 }

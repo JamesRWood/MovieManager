@@ -2,7 +2,7 @@
 {
     using Models;
 
-    public interface IQueryForMovieById
+    public interface IQueryForMovieById : IQueryBase
     {
         Movie Execute(int movieId);
     }

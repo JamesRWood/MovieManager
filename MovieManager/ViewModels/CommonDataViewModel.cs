@@ -5,13 +5,18 @@
     using Contracts.ViewModels;
     using Helpers;
     using Models;
-    using MovieManager.Contracts;
 
     public class CommonDataViewModel : ICommonDataViewModel
     {
+        private Movie _commonDataSelectedMovie;
+
         private List<Movie> _commonDataMovies;
 
-        public List<string> MovieFileTypes => new List<string> {".mp4", ".avi"};
+        public Movie CommonDataSelectedMovie
+        {
+            get => _commonDataSelectedMovie;
+            set { PropertyChanged.ChangeAndNotify(ref _commonDataSelectedMovie, value, () => CommonDataSelectedMovie); }
+        }
 
         public List<Movie> CommonDataMovies
         {

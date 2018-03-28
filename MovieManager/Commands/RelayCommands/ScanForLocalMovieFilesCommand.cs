@@ -31,11 +31,6 @@
 
         public ICommand Command => _command ?? (_command = new RelayCommand<object>(Execute, CanExecute));
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
         public void Execute(object parameter)
         {
             var movies = _fileController.FindLocalMovieFiles();
@@ -49,6 +44,11 @@
             
             _commonData.CommonDataMovies = concurrentMovieList.OrderBy(x => x.Title).ToList();
             _fileController.StoreMovieData(concurrentMovieList.ToList());
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
         }
 
         public event EventHandler CanExecuteChanged;

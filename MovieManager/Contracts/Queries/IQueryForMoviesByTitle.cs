@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public interface IQueryForMoviesByTitle
+    public interface IQueryForMoviesByTitle : IQueryBase
     {
         Task<List<Movie>> Execute(string title);
     }
