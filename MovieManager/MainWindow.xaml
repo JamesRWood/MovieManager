@@ -14,9 +14,13 @@
     <Grid Background="{StaticResource HatchBrush}">
         <Grid>
             <Grid.Background>
-                <RadialGradientBrush GradientOrigin="0.5,1.5" ColorInterpolationMode="ScRgbLinearInterpolation" RadiusX="0.4" RadiusY="0.6" Opacity="0.6">
+                <RadialGradientBrush GradientOrigin="0.5,1.2" ColorInterpolationMode="ScRgbLinearInterpolation" RadiusX="0.32" RadiusY="0.8" Opacity="0.8">
                     <GradientStop Color="{Binding SelectedMovie, Converter={StaticResource ImageToMajorityColourRgbConverter}}" Offset="0.2"/>
-                    <GradientStop Color="#4C4645" Offset="1.0"/>
+                    <GradientStop Offset="1.0">
+                        <GradientStop.Color>
+                            <Color A="0" B="0" G="0" R="0"/>
+                        </GradientStop.Color>
+                    </GradientStop>
                 </RadialGradientBrush>
             </Grid.Background>
             <Grid.ColumnDefinitions>
