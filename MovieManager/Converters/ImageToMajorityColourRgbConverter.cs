@@ -10,16 +10,16 @@
 
     public class ImageToMajorityColourRgbConverter : IValueConverter
     {
-        private static System.Windows.Media.Color Black => System.Windows.Media.Color.FromArgb(Color.DarkSlateGray.A, Color.DarkSlateGray.R, Color.DarkSlateGray.G, Color.DarkSlateGray.B);
+        private static System.Windows.Media.Color TransparentColor => System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is Movie movie))
             {
-                return Black;
+                return TransparentColor;
             }
 
-            return string.IsNullOrEmpty(movie.ImagePath) ? Black : GetColor(movie.ImagePath);
+            return string.IsNullOrEmpty(movie.ImagePath) ? TransparentColor : GetColor(movie.ImagePath);
         }
 
         private static unsafe System.Windows.Media.Color GetColor(string filePath)
@@ -30,7 +30,7 @@
 
             if (responseStream == null)
             {
-                return Black;
+                return TransparentColor;
             }
 
             using (var image = (Bitmap) Image.FromStream(responseStream))
