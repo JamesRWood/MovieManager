@@ -3,7 +3,9 @@
     using System;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Media.Effects;
     using Contracts.Commands.RelayCommands;
     using Contracts.Controllers;
     using Contracts.ViewModels;
@@ -17,6 +19,7 @@
         private readonly IFindMovieDetailsViewModel _findMovieDetailsViewModel;
         private readonly IFileController _fileController;
         private ICommand _command;
+        private BlurEffect _blur;
 
         public EditMovieSettingsCommand(
             ICommonDataViewModel commonData,
@@ -39,16 +42,20 @@
                 return;
             }
 
+            ToggleMainWindowBlur();
             _findMovieDetailsViewModel.SelectedMovie = selectedMovie;
             var formattedMovieTitle = Regex.Replace(selectedMovie.Title, Core.DateTagRegex, string.Empty);
             _findMovieDetailsViewModel.PossibleMatches = Task.Run(() => _apiController.GetPossibleMatchesFromApi(formattedMovieTitle)).Result.ToObservableCollection();
 
             var window = new FindMovieDetails
             {
-                DataContext = _findMovieDetailsViewModel
+                DataContext = _findMovieDetailsViewModel,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Topmost = true
             };
-
+            
             window.ShowDialog();
+            ToggleMainWindowBlur();
 
             if (_findMovieDetailsViewModel.SelectedMatchedMovie == null)
             {
@@ -65,6 +72,27 @@
 
             _commonData.CommonDataMovies = movies;
             _commonData.CommonDataSelectedMovie = _findMovieDetailsViewModel.SelectedMatchedMovie;
+        }
+
+        private void ToggleMainWindowBlur()
+        {
+            if (_blur == null)
+            {
+                _blur = new BlurEffect
+                {
+                    Radius = 50,
+                    RenderingBias = RenderingBias.Quality
+                };
+            }
+            else
+            {
+                _blur = null;
+            }
+            
+            if (Application.Current.MainWindow != null)
+            {
+                Application.Current.MainWindow.Effect = _blur;
+            }
         }
 
         public bool CanExecute(object parameter)

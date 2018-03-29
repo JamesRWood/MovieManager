@@ -1,8 +1,6 @@
 ﻿<Application x:Class="MovieManager.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MovieManager"
-             xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
              xmlns:converters="clr-namespace:MovieManager.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -14,7 +12,7 @@
         <SolidColorBrush x:Key="TmdbPrimary">#01d277</SolidColorBrush>
 
         <SolidColorBrush x:Key="LightGreen">#01CF0B</SolidColorBrush>
-        
+
         <!--Visual Brushes-->
         <VisualBrush x:Key="HatchBrush" TileMode="Tile"
                      Viewport="0,0,5,5" ViewportUnits="Absolute"
@@ -31,9 +29,11 @@
         <!--Converters-->
         <converters:ScreenResolutionToPageWidthConverter x:Key="ScreenResolutionToPageWidthConverter"/>
         <converters:ImagePathConverter x:Key="ImagePathConverter"/>
-        <converters:MovieSynopsisHasValueToVisibilityConverter x:Key="StringHasValueToVisibilityConverter"/>
+        <converters:MovieSynopsisHasValueToVisibilityConverter x:Key="MovieSynopsisHasValueToVisibilityConverter"/>
+        <converters:MovieTitleHasValueToVisibilityConverter x:Key="MovieTitleHasValueToVisibilityConverter"/>
         <converters:TextToGeometryConverter x:Key="TextToGeometryConverter"/>
-        
+        <converters:ImageToMajorityColourRgbConverter x:Key="ImageToMajorityColourRgbConverter"/>
+
         <!--Styles-->
         <Style TargetType="GridViewColumnHeader">
             <Setter Property="IsEnabled" Value="False"/>
@@ -58,7 +58,7 @@
         <Style x:Key="MovieTitleStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="Black" Opacity="0.8" Direction="90" ShadowDepth="3" BlurRadius="3" RenderingBias="Quality" />
+                    <DropShadowEffect Color="Black" Opacity="0.8" Direction="45" ShadowDepth="3" BlurRadius="3" RenderingBias="Quality" />
                 </Setter.Value>
             </Setter>
             <Setter Property="Padding" Value="15,10,0,0"/>
@@ -74,7 +74,7 @@
         <Style x:Key="MovieHeaderStyle1" TargetType="{x:Type TextBlock}">
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="90" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="45" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
                 </Setter.Value>
             </Setter>
             <Setter Property="Padding" Value="0,40,0,0"/>
@@ -90,7 +90,7 @@
         <Style x:Key="MovieHeaderStyle2" TargetType="{x:Type TextBlock}">
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="90" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="45" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
                 </Setter.Value>
             </Setter>
             <Setter Property="VerticalAlignment" Value="Top"/>

@@ -6,7 +6,7 @@
     using System.Windows;
     using System.Windows.Data;
 
-    public class MovieSynopsisHasValueToVisibilityConverter : IValueConverter
+    public class MovieTitleHasValueToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -16,7 +16,7 @@
                 return Visibility.Hidden;
             }
 
-            return !string.IsNullOrEmpty(val.Synopsis) ? Visibility.Visible : Visibility.Hidden;
+            return !string.IsNullOrEmpty(val.Title) ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
