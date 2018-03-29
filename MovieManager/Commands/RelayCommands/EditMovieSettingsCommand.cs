@@ -65,12 +65,15 @@
             _findMovieDetailsViewModel.SelectedMatchedMovie.FileLocation = _fileController.RenameFile(_findMovieDetailsViewModel.SelectedMovie.FileLocation, _findMovieDetailsViewModel.SelectedMatchedMovie.Title);
                 
             var movies = _commonData.CommonDataMovies;
+            _commonData.CommonDataMovies = null;
             movies.Remove(_findMovieDetailsViewModel.SelectedMovie);
             movies.Add(_findMovieDetailsViewModel.SelectedMatchedMovie);
 
             _fileController.StoreMovieData(movies);
 
             _commonData.CommonDataMovies = movies;
+
+            _commonData.CommonDataSelectedMovie = null;
             _commonData.CommonDataSelectedMovie = _findMovieDetailsViewModel.SelectedMatchedMovie;
         }
 
