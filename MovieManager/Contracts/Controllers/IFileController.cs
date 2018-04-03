@@ -5,7 +5,7 @@
 
     public interface IFileController
     {
-        IList<Movie> GetMovieDataFromLocalLibraryFile();
+        List<Movie> GetMovieDataFromLocalLibraryFile();
 
         List<Movie> FindLocalMovieFiles();
 

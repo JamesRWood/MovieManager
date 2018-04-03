@@ -79,13 +79,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AutofacInstaller.cs" />
-    <Compile Include="Commands\RelayCommands\EditMovieSettingsCommand.cs" />
+    <Compile Include="Commands\RelayCommands\ShowEditMovieSettingsViewCommand.cs" />
     <Compile Include="Commands\RelayCommands\PlayMovieCommand.cs" />
     <Compile Include="Commands\RelayCommands\RelayCommand.cs" />
     <Compile Include="Commands\RelayCommands\ScanForLocalMovieFilesCommand.cs" />
-    <Compile Include="Contracts\Commands\RelayCommands\IEditMovieSettingsCommand.cs" />
+    <Compile Include="Commands\RelayCommands\SetSelectedMovieCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\IShowEditMovieSettingsViewCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IPlayMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IScanForLocalMovieFilesCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISetSelectedMovieCommand.cs" />
     <Compile Include="Contracts\Controllers\IApiController.cs" />
     <Compile Include="Contracts\Controllers\IFileController.cs" />
     <Compile Include="Contracts\Queries\IQueryBase.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Converters\ImageToMajorityColourRgbConverter.cs" />
     <Compile Include="Converters\MovieTitleHasValueToVisibilityConverter.cs" />
     <Compile Include="Converters\MovieSynopsisHasValueToVisibilityConverter.cs" />
+    <Compile Include="Converters\MultiValueConverter.cs" />
     <Compile Include="Converters\ScreenResolutionToPageWidthConverter.cs" />
     <Compile Include="Converters\TextToGeometryConverter.cs" />
     <Compile Include="Core.cs" />

@@ -14,7 +14,7 @@
     {
         private const string MovieDataFileName = "MovieLibraryData.json";
 
-        public IList<Movie> GetMovieDataFromLocalLibraryFile()
+        public List<Movie> GetMovieDataFromLocalLibraryFile()
         {
             var movies = new List<Movie>();
 
@@ -101,7 +101,7 @@
         public string RenameFile(string filePath, string newFileName)
         {
             var fileInfo = new FileInfo(filePath);
-            var newFilePath = fileInfo.FullName.Replace(fileInfo.Name, newFileName) + fileInfo.Extension;
+            var newFilePath = fileInfo.FullName.Replace(fileInfo.Name, newFileName.Replace(":", string.Empty)) + fileInfo.Extension;
 
             File.Move(filePath, newFilePath);
             return newFilePath;

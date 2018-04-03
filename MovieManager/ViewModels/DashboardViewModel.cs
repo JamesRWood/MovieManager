@@ -15,7 +15,7 @@
     {
         private readonly ICommonDataViewModel _commonData;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
-        private readonly IEditMovieSettingsCommand _editMovieSettingsCommand;
+        private readonly IShowEditMovieSettingsViewCommand _showEditMovieSettingsViewCommand;
         private readonly IPlayMovieCommand _playMovieCommand;
         private ObservableCollection<Movie> _movies;
         private Movie _selectedMovie;
@@ -24,14 +24,13 @@
         {
             _commonData = AutofacInstaller.Container.Resolve<ICommonDataViewModel>();
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
-            _editMovieSettingsCommand = AutofacInstaller.Container.Resolve<IEditMovieSettingsCommand>();
+            _showEditMovieSettingsViewCommand = AutofacInstaller.Container.Resolve<IShowEditMovieSettingsViewCommand>();
             _playMovieCommand = AutofacInstaller.Container.Resolve<IPlayMovieCommand>();
 
-            var fileController = AutofacInstaller.Container.Resolve<IFileController>();
-
-            _movies = fileController.GetMovieDataFromLocalLibraryFile().ToObservableCollection();
-
             _commonData.PropertyChanged += CommonDataPropertyChanged;
+
+            var fileController = AutofacInstaller.Container.Resolve<IFileController>();
+            _commonData.CommonDataMovies = fileController.GetMovieDataFromLocalLibraryFile();
         }
 
         public ObservableCollection<Movie> Movies
@@ -48,7 +47,7 @@
 
         public ICommand ScanForLocalMovieFilesCommand => _scanForLocalMovieFilesCommand.Command;
 
-        public ICommand EditMovieSettingsCommand => _editMovieSettingsCommand.Command;
+        public ICommand ShowEditMovieSettingsViewCommand => _showEditMovieSettingsViewCommand.Command;
 
         public ICommand PlayMovieCommand => _playMovieCommand.Command;
 

@@ -33,6 +33,7 @@
         <converters:MovieTitleHasValueToVisibilityConverter x:Key="MovieTitleHasValueToVisibilityConverter"/>
         <converters:TextToGeometryConverter x:Key="TextToGeometryConverter"/>
         <converters:ImageToMajorityColourRgbConverter x:Key="ImageToMajorityColourRgbConverter"/>
+        <converters:MultiValueConverter x:Key="MultiValueConverter"/>
 
         <!--Styles-->
         <Style TargetType="GridViewColumnHeader">
