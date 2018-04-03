@@ -69,16 +69,17 @@
                     <Button Content="Accept" Style="{StaticResource ButtonStyle}" Command="{Binding SetSelectedMovieCommand}">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                <Binding Path="SelectedMatchedMovie"/>
                                 <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}"/>
+                                <Binding Path="SelectedMatchedMovie"/>
+                                <Binding Path="SelectedMovie"/>
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>
                     <Button Content="Cancel" Style="{StaticResource ButtonStyle}" Command="{Binding SetSelectedMovieCommand}">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                <Binding Path="SelectedMovie"/>
                                 <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}"/>
+                                <Binding Path="SelectedMovie"/>
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>

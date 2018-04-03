@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Helpers\ObservableCollectionHelper.cs" />
     <Compile Include="Helpers\PropertyChangedHelper.cs" />
+    <Compile Include="Helpers\WindowEffectHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Queries\QueryForMovieById.cs" />
     <Compile Include="Queries\QueryForMoviesByTitle.cs" />
