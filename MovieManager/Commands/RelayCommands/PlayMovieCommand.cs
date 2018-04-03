@@ -24,13 +24,14 @@
 
         public bool CanExecute(object parameter)
         {
-            if (parameter is Movie movie)
+            if (!(parameter is Movie movie))
             {
-                var fileInfo = new FileInfo(movie.FileLocation);
-                return fileInfo.Exists && Core.MovieFileTypes.Any(x => x == fileInfo.Extension);
+                return false;
             }
 
-            return false;
+            var fileInfo = new FileInfo(movie.FileLocation);
+            return fileInfo.Exists && Core.MovieFileTypes.Any(x => x == fileInfo.Extension);
+
         }
 
         public event EventHandler CanExecuteChanged;
