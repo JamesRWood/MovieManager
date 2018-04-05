@@ -113,7 +113,7 @@
         </Style>
 
         <Style x:Key="MovieListItemStyle" TargetType="{x:Type ListView}">
-            <Setter Property="Background" Value="#4C4645"/>
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="16"/>
@@ -125,7 +125,47 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
+        <Style x:Key="ScrollBarStyle" TargetType="ScrollBar">
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+            <Setter Property="Width" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Border CornerRadius="3" Background="{StaticResource HatchBrush}" Width="6">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" Direction="225" Opacity="0.6" ShadowDepth="1" RenderingBias="Performance"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.00001*"/>
+                                </Grid.RowDefinitions>
+                                <Track IsEnabled="{TemplateBinding IsMouseOver}" IsDirectionReversed="True">
+                                    <Track.Thumb>
+                                        <Thumb>
+                                            <Thumb.Style>
+                                                <Style TargetType="{x:Type Thumb}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                                <Border BorderThickness="0" CornerRadius="3" Background="{StaticResource DarkGrey2}">
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Thumb.Style>
+                                        </Thumb>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="GridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
             <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
