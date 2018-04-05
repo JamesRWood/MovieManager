@@ -1,39 +1,27 @@
-﻿namespace MovieManager.Converters
+﻿namespace MovieManager.Helpers
 {
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
-    using System.Globalization;
     using System.Net;
-    using System.Windows.Data;
     using Models;
+    using Color = System.Windows.Media.Color;
+    using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
-    public class ImageToMajorityColourRgbConverter : IValueConverter
+    public static class GetImageMajorityColorHelper
     {
-        private static System.Windows.Media.Color TransparentColor => System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public static unsafe Color GetImageMajorityColor<T>(this T movie) where T : Movie
         {
-            if (!(value is Movie movie))
-            {
-                return TransparentColor;
-            }
-
-            return string.IsNullOrEmpty(movie.ImagePath) ? TransparentColor : GetColor(movie.ImagePath);
-        }
-
-        private static unsafe System.Windows.Media.Color GetColor(string filePath)
-        {
-            filePath = filePath.StartsWith("\\") ? filePath.Substring(1) : filePath;
+            var filePath = movie.ImagePath.StartsWith("\\") ? movie.ImagePath.Substring(1) : movie.ImagePath;
             var req = WebRequest.Create(new Uri("https://image.tmdb.org/t/p/w780" + filePath));
             var responseStream = req.GetResponse().GetResponseStream();
 
             if (responseStream == null)
             {
-                return TransparentColor;
+                return Core.TransparentColor;
             }
 
-            using (var image = (Bitmap) Image.FromStream(responseStream))
+            using (var image = (Bitmap)Image.FromStream(responseStream))
             {
                 if (image.PixelFormat != PixelFormat.Format24bppRgb)
                 {
@@ -50,7 +38,7 @@
                 const int pixelSize = 3;
                 for (int y = 0; y < data.Height; ++y)
                 {
-                    byte* row = (byte*) data.Scan0 + (y * data.Stride);
+                    byte* row = (byte*)data.Scan0 + (y * data.Stride);
                     for (int x = 0; x < data.Width; ++x)
                     {
                         var pos = x * pixelSize;
@@ -65,28 +53,22 @@
                 b = b / (data.Width * data.Height);
                 image.UnlockBits(data);
 
-                Color colour;
+                System.Drawing.Color colour;
                 if (r >= g && r >= b)
                 {
-                    colour = Color.FromArgb((int)r, 0, 0);
+                    colour = System.Drawing.Color.FromArgb((int)r, 0, 0);
                 }
                 else if (g >= r && g >= b)
                 {
-                    colour = Color.FromArgb(0, (int)g, 0);
+                    colour = System.Drawing.Color.FromArgb(0, (int)g, 0);
                 }
                 else
                 {
-                    colour = Color.FromArgb(0, 0, (int)b);
+                    colour = System.Drawing.Color.FromArgb(0, 0, (int)b);
                 }
-                
-                //var colour = Color.FromArgb((int)r, (int)g, (int)b);
-                return System.Windows.Media.Color.FromArgb(colour.A, colour.R, colour.G, colour.B);
-            }
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+                return Color.FromArgb(colour.A, colour.R, colour.G, colour.B);
+            }
         }
     }
 }

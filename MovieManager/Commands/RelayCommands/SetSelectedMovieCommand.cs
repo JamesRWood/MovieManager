@@ -58,6 +58,7 @@
             }
 
             updatedSelectedMovie.FileLocation = _fileController.RenameFile(selectedMovie.FileLocation, updatedSelectedMovie.Title);
+            updatedSelectedMovie.BackdropColor = updatedSelectedMovie.GetImageMajorityColor();
 
             var movies = _commonData.CommonDataMovies;
             movies.Remove(selectedMovie);
