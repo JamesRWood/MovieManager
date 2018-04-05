@@ -51,7 +51,7 @@
                         </Image>
                     </Grid>
                     <Grid Column="1" Name="MovieTitleContainer">
-                        <Rectangle Margin="18, 20, 0, 10" Width="{Binding ActualWidth, ElementName=MovieTitleContainer}">
+                        <Rectangle Margin="0,20,0,10" Width="{Binding ActualWidth, ElementName=MovieTitleContainer}">
                             <Rectangle.Effect>
                                 <DropShadowEffect BlurRadius="6" ShadowDepth="3" Direction="45" Opacity="0.8" Color="Black" RenderingBias="Performance"/>
                             </Rectangle.Effect>
@@ -90,7 +90,10 @@
                                         <Button Content="DoStuff! =]" Style="{StaticResource ButtonStyle}" Width="{Binding ActualWidth, ElementName=ButtonContainer}" Command="{Binding ScanForLocalMovieFilesCommand}"/>
                                     </Grid>
                                     <Grid Row="2" Name="TitleListContainer">
-                                        <ListView ItemsSource="{Binding Movies}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}">
+                                        <ListView ItemsSource="{Binding Movies}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                            <ListView.Resources>
+                                                <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollBarStyle}"/>
+                                            </ListView.Resources>
                                             <ListView.View>
                                                 <GridView>
                                                     <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}">
