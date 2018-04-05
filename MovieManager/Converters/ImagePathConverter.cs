@@ -17,7 +17,6 @@
             path = path.StartsWith("\\") ? path.Substring(1) : path;
             var uri = new Uri("https://image.tmdb.org/t/p/w780" + path);
             return uri;
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

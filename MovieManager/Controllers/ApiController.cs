@@ -1,13 +1,14 @@
 ﻿namespace MovieManager.Controllers
 {
-    using Contracts.Controllers;
-    using MovieManager.Contracts.Queries;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using Contracts.Controllers;
+    using Helpers;
+    using MovieManager.Contracts.Queries;
     using Movie = Models.Movie;
 
     public class ApiController : IApiController
@@ -39,6 +40,7 @@
                 if (match != null)
                 {
                     match.FileLocation = movie.FileLocation;
+                    match.BackdropColor = match.GetImageMajorityColor();
 
                     if (!string.Equals(match.Title, movie.Title))
                     {

@@ -12,18 +12,18 @@
         <viewModels:DashboardViewModel/>
     </Window.DataContext>
     <Grid Background="{StaticResource HatchBrush}">
-        <Grid Name="GridMeh">
+        <Grid x:Name="MainGrid">
             <Grid.Triggers>
-                <EventTrigger RoutedEvent="Grid.GotFocus">
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetName="GridMeh" Storyboard.TargetProperty="(Grid.Background).(RadialGradientBrush.GradientStops)[0].Color" To="{Binding BackgroundColor}" Duration="0:0:0.25"/>
+                            <ColorAnimation Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="(Grid.Background).(RadialGradientBrush.GradientStops)[0].Color" To="{Binding SelectedMovie.BackdropColor, NotifyOnTargetUpdated=True}" Duration="0:0:0.1"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </Grid.Triggers>
             <Grid.Background>
-                <RadialGradientBrush x:Name="Meh" GradientOrigin="0.5,3" ColorInterpolationMode="ScRgbLinearInterpolation" RadiusX="0.8" RadiusY="0.8" Opacity="0.8">
+                <RadialGradientBrush GradientOrigin="0.5,3" ColorInterpolationMode="ScRgbLinearInterpolation" RadiusX="0.8" RadiusY="0.8" Opacity="0.8">
                     <GradientStop Color="{Binding BaseColor}" Offset="0.6"/>
                     <GradientStop Color="{Binding BaseColor}" Offset="1.0"/>
                 </RadialGradientBrush>
