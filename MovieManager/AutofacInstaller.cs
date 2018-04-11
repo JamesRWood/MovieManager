@@ -5,8 +5,6 @@
     using System.Reflection;
     using System.Windows.Input;
     using Autofac;
-    using Commands;
-    using Contracts.Commands;
     using Contracts.Controllers;
     using Contracts.Queries;
     using Contracts.ViewModels;
