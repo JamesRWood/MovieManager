@@ -2,8 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converters="clr-namespace:MovieManager.Converters"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow.xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
+        <!--Constant values-->
+        <sys:Int32 x:Key="MainGridViewCount">2</sys:Int32>
+        
         <!--Colours-->
         <SolidColorBrush x:Key="DarkGrey1">#4C4645</SolidColorBrush>
         <SolidColorBrush x:Key="DarkGrey2">#2D2D2D</SolidColorBrush>
@@ -33,6 +37,7 @@
         <converters:MovieTitleHasValueToVisibilityConverter x:Key="MovieTitleHasValueToVisibilityConverter"/>
         <converters:TextToGeometryConverter x:Key="TextToGeometryConverter"/>
         <converters:MultiValueConverter x:Key="MultiValueConverter"/>
+        <converters:WidthModifierConverter x:Key="WidthModifierConverter"/>
 
         <!--Styles-->
         <Style TargetType="GridViewColumnHeader">

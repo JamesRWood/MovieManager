@@ -18,6 +18,7 @@
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
         private readonly IShowEditMovieSettingsViewCommand _showEditMovieSettingsViewCommand;
         private readonly IPlayMovieCommand _playMovieCommand;
+        private readonly IAnimateToGridCommand _animateToGridCommand;
         private ObservableCollection<Movie> _movies;
         private Movie _selectedMovie;
 
@@ -27,7 +28,8 @@
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
             _showEditMovieSettingsViewCommand = AutofacInstaller.Container.Resolve<IShowEditMovieSettingsViewCommand>();
             _playMovieCommand = AutofacInstaller.Container.Resolve<IPlayMovieCommand>();
-            
+            _animateToGridCommand = AutofacInstaller.Container.Resolve<IAnimateToGridCommand>();
+
             _commonData.PropertyChanged += CommonDataPropertyChanged;
 
             var fileController = AutofacInstaller.Container.Resolve<IFileController>();
@@ -53,6 +55,8 @@
         public ICommand ShowEditMovieSettingsViewCommand => _showEditMovieSettingsViewCommand.Command;
 
         public ICommand PlayMovieCommand => _playMovieCommand.Command;
+
+        public ICommand AnimateToGridCommand => _animateToGridCommand.Command;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
