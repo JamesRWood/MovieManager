@@ -31,13 +31,14 @@
                 return;
             }
 
-            var xPos1 = 0;
-            var xPos2 = 0 - (width / 2);
+            const int xPos1 = 0;
+            var xPos2 = 0 - (width - 80);
 
             var animation = position == 1 ? GetAnimation(xPos2, xPos1) : GetAnimation(xPos1, xPos2);
 
             var transform = new TranslateTransform();
             transform.BeginAnimation(TranslateTransform.XProperty, animation);
+
             grid.RenderTransform = transform;
         }
 
