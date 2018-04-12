@@ -6,7 +6,8 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
         <!--Constant values-->
-        <sys:Int32 x:Key="MainGridViewCount">2</sys:Int32>
+        <sys:Int32 x:Key="Position1">1</sys:Int32>
+        <sys:Int32 x:Key="Position2">2</sys:Int32>
         
         <!--Colours-->
         <SolidColorBrush x:Key="DarkGrey1">#4C4645</SolidColorBrush>

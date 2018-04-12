@@ -74,10 +74,7 @@
                         <DropShadowEffect Color="Black" Opacity="1" Direction="90" ShadowDepth="2" BlurRadius="30" RenderingBias="Performance" />
                     </Border.Effect>
                     <Grid Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ClipToBounds="True" FlowDirection="LeftToRight">
-                        <Grid Name="MovieSettingsGrid" Background="{StaticResource DarkGrey2}" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}">
-                            
-                        </Grid>
-                        <Grid Name="MainDashboardGrid" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}">
+                        <Grid Name="MainDashboardGrid" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ZIndex="1">
                             <Grid.Effect>
                                 <DropShadowEffect Color="Black" Opacity="1" Direction="90" ShadowDepth="2" BlurRadius="30" RenderingBias="Performance" />
                             </Grid.Effect>
@@ -148,12 +145,12 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Button Grid.Column="0" Content="Play" Style="{StaticResource ButtonStyle}" Command="{Binding PlayMovieCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>
-                                                    <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding ShowEditMovieSettingsViewCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>
-                                                    <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding AnimateToGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
+                                                    <!--<Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding ShowEditMovieSettingsViewCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>-->
+                                                    <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
                                                         <Button.CommandParameter>
                                                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
                                                                 <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
-                                                                <Binding Source="{StaticResource MainGridViewCount}"/>
+                                                                <Binding Source="{StaticResource Position2}"/>
                                                                 <Binding ElementName="MainDashboardGrid"/>
                                                             </MultiBinding>
                                                         </Button.CommandParameter>
@@ -179,6 +176,33 @@
                                             </Grid>
                                         </Grid>
                                     </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid Name="MovieSettingsGrid" Background="{StaticResource DarkGrey2}" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" ZIndex="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Row="2">
+                                    <Button Content="Back" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
+                                                <Binding Source="{StaticResource Position1}"/>
+                                                <Binding ElementName="MainDashboardGrid"/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </Grid>

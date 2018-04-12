@@ -79,13 +79,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AutofacInstaller.cs" />
-    <Compile Include="Commands\RelayCommands\AnimateToGridCommand.cs" />
+    <Compile Include="Commands\RelayCommands\SlideGridCommand.cs" />
     <Compile Include="Commands\RelayCommands\ShowEditMovieSettingsViewCommand.cs" />
     <Compile Include="Commands\RelayCommands\PlayMovieCommand.cs" />
     <Compile Include="Commands\RelayCommands\RelayCommand.cs" />
     <Compile Include="Commands\RelayCommands\ScanForLocalMovieFilesCommand.cs" />
     <Compile Include="Commands\RelayCommands\SetSelectedMovieCommand.cs" />
-    <Compile Include="Contracts\Commands\RelayCommands\IAnimateToGridCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISlideGridCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IShowEditMovieSettingsViewCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IPlayMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IScanForLocalMovieFilesCommand.cs" />
