@@ -7,7 +7,7 @@
     using System.Windows.Media.Animation;
     using Contracts.Commands.RelayCommands;
 
-    public class AnimateToGridCommand : IAnimateToGridCommand
+    public class SlideGridCommand : ISlideGridCommand
     {
         private ICommand _command;
 

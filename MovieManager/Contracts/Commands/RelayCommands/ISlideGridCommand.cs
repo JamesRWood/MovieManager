@@ -2,7 +2,7 @@
 {
     using System.Windows.Input;
 
-    public interface IAnimateToGridCommand : ICommand
+    public interface ISlideGridCommand : ICommand
     {
         ICommand Command { get; }
     }
