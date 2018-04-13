@@ -79,14 +79,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AutofacInstaller.cs" />
+    <Compile Include="Commands\RelayCommands\SearchForMovieWithTextCommand.cs" />
     <Compile Include="Commands\RelayCommands\SlideGridCommand.cs" />
-    <Compile Include="Commands\RelayCommands\ShowEditMovieSettingsViewCommand.cs" />
     <Compile Include="Commands\RelayCommands\PlayMovieCommand.cs" />
     <Compile Include="Commands\RelayCommands\RelayCommand.cs" />
     <Compile Include="Commands\RelayCommands\ScanForLocalMovieFilesCommand.cs" />
     <Compile Include="Commands\RelayCommands\SetSelectedMovieCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISearchForMovieWithTextCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\ISlideGridCommand.cs" />
-    <Compile Include="Contracts\Commands\RelayCommands\IShowEditMovieSettingsViewCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IPlayMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IScanForLocalMovieFilesCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\ISetSelectedMovieCommand.cs" />
@@ -96,7 +96,6 @@
     <Compile Include="Contracts\ViewModels\ICommonDataViewModel.cs" />
     <Compile Include="Contracts\ViewModels\IDashboardViewModel.cs" />
     <Compile Include="Contracts\Queries\IQueryForMoviesByTitle.cs" />
-    <Compile Include="Contracts\ViewModels\IFindMovieDetailsViewModel.cs" />
     <Compile Include="Contracts\ViewModels\IViewModel.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\FileController.cs" />
@@ -119,7 +118,6 @@
     <Compile Include="Queries\QueryForMoviesByTitle.cs" />
     <Compile Include="ViewModels\CommonDataViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
-    <Compile Include="ViewModels\FindMovieDetailsViewModel.cs" />
     <Page Include="FindMovieDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -145,7 +145,6 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Button Grid.Column="0" Content="Play" Style="{StaticResource ButtonStyle}" Command="{Binding PlayMovieCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>
-                                                    <!--<Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding ShowEditMovieSettingsViewCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>-->
                                                     <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
                                                         <Button.CommandParameter>
                                                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
