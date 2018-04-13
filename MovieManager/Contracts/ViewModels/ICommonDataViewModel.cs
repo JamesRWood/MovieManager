@@ -8,5 +8,7 @@
         Movie CommonDataSelectedMovie { get; set; }
 
         List<Movie> CommonDataMovies { get; set; }
+
+        List<Movie> CommonDataPossibleMatches { get; set; }
     }
 }

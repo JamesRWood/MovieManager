@@ -16,25 +16,30 @@
     {
         private readonly ICommonDataViewModel _commonData;
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
-        private readonly IShowEditMovieSettingsViewCommand _showEditMovieSettingsViewCommand;
         private readonly IPlayMovieCommand _playMovieCommand;
         private readonly ISlideGridCommand _slideGridCommand;
+        private readonly ISearchForMovieWithTextCommand _searchForMovieWithTextCommand;
         private ObservableCollection<Movie> _movies;
         private Movie _selectedMovie;
+        private ObservableCollection<Movie> _possibleMatches;
+        private Movie _selectedPossibleMatch;
+        private string _searchTerm;
 
         public DashboardViewModel()
         {
             _commonData = AutofacInstaller.Container.Resolve<ICommonDataViewModel>();
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
-            _showEditMovieSettingsViewCommand = AutofacInstaller.Container.Resolve<IShowEditMovieSettingsViewCommand>();
             _playMovieCommand = AutofacInstaller.Container.Resolve<IPlayMovieCommand>();
             _slideGridCommand = AutofacInstaller.Container.Resolve<ISlideGridCommand>();
+            _searchForMovieWithTextCommand = AutofacInstaller.Container.Resolve<ISearchForMovieWithTextCommand>();
 
             _commonData.PropertyChanged += CommonDataPropertyChanged;
 
             var fileController = AutofacInstaller.Container.Resolve<IFileController>();
             _commonData.CommonDataMovies = fileController.GetMovieDataFromLocalLibraryFile();
         }
+
+        #region MainDashboardGrid Properties
 
         public ObservableCollection<Movie> Movies
         {
@@ -48,15 +53,39 @@
             set { PropertyChanged.ChangeAndNotify(ref _selectedMovie, value, () => SelectedMovie); }
         }
 
+        #endregion
+
+        #region MovieSettingsGrid Properties
+
+        public ObservableCollection<Movie> PossibleMatches
+        {
+            get => _possibleMatches;
+            set { PropertyChanged.ChangeAndNotify(ref _possibleMatches, value, () => PossibleMatches); }
+        }
+
+        public Movie SelectedPossibleMatch
+        {
+            get => _selectedPossibleMatch;
+            set { PropertyChanged.ChangeAndNotify(ref _selectedPossibleMatch, value, () => SelectedPossibleMatch); }
+        }
+
+        public string SearchTerm
+        {
+            get => _searchTerm;
+            set { PropertyChanged.ChangeAndNotify(ref _searchTerm, value, () => SearchTerm); }
+        }
+
+        #endregion
+
         public Color BaseColor => Core.TransparentColor;
 
         public ICommand ScanForLocalMovieFilesCommand => _scanForLocalMovieFilesCommand.Command;
 
-        public ICommand ShowEditMovieSettingsViewCommand => _showEditMovieSettingsViewCommand.Command;
-
         public ICommand PlayMovieCommand => _playMovieCommand.Command;
 
         public ICommand SlideGridCommand => _slideGridCommand.Command;
+
+        public ICommand SearchForMovieWithTextCommand => _searchForMovieWithTextCommand.Command;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -69,6 +98,9 @@
                     break;
                 case "CommonDataSelectedMovie":
                     SelectedMovie = _commonData.CommonDataSelectedMovie;
+                    break;
+                case "CommonDataPossibleMatches":
+                    PossibleMatches = _commonData.CommonDataPossibleMatches.ToObservableCollection();
                     break;
                 default:
                     break;
