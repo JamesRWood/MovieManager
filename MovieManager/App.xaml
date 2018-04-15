@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converters="clr-namespace:MovieManager.Converters"
              StartupUri="MainWindow.xaml"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
     <Application.Resources>
         <!--Constant values-->
         <sys:Int32 x:Key="Position1">1</sys:Int32>
@@ -183,6 +184,17 @@
                     <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <Style x:Key="WatermarkTextBoxStyle" TargetType="{x:Type xctk:WatermarkTextBox}">
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
         </Style>
     </Application.Resources>
 </Application>

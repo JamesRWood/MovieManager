@@ -1,18 +1,19 @@
 ﻿namespace MovieManager.Commands.RelayCommands
 {
+    using System;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Contracts.Commands.RelayCommands;
     using Contracts.Controllers;
     using Contracts.ViewModels;
 
-    public class SearchForMovieWithTextCommand : ISearchForMovieWithTextCommand
+    public class SearchForMovieByTitleCommand : ISearchForMovieByTitleCommand
     {
         private readonly ICommonDataViewModel _commonData;
         private readonly IApiController _apiController;
         private ICommand _command;
 
-        public SearchForMovieWithTextCommand(
+        public SearchForMovieByTitleCommand(
             ICommonDataViewModel commonData,
             IApiController apiController)
         {
@@ -22,9 +23,9 @@
 
         public ICommand Command => _command ?? (_command = new RelayCommand<object>(Execute, CanExecute));
 
-        private void Execute(object parameter)
+        public void Execute(object parameter)
         {
-            if (!(parameter is string searchTerm))
+            if (!(parameter is string searchTerm) || searchTerm.Length < 1)
             {
                 return;
             }
@@ -32,9 +33,16 @@
             _commonData.CommonDataPossibleMatches = Task.Run(() => _apiController.GetPossibleMatchesFromApi(searchTerm)).Result;
         }
 
-        private bool CanExecute(object parameter)
+        public bool CanExecute(object parameter)
         {
-            return parameter is string;
+            if (!(parameter is string searchTerm))
+            {
+                return false;
+            }
+
+            return searchTerm.Length > 0;
         }
+
+        public event EventHandler CanExecuteChanged;
     }
 }

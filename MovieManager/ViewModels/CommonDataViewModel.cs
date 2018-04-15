@@ -11,6 +11,8 @@
         private Movie _commonDataSelectedMovie;
         private List<Movie> _commonDataMovies;
         private List<Movie> _commonDataPossibleMatches;
+        private Movie _commonDataSelectedPossibleMatch;
+        private string _commonDataSearchTerm;
 
         public Movie CommonDataSelectedMovie
         {
@@ -28,6 +30,18 @@
         {
             get => _commonDataPossibleMatches;
             set { PropertyChanged.ChangeAndNotify(ref _commonDataPossibleMatches, value, () => CommonDataPossibleMatches); }
+        }
+
+        public Movie CommonDataSelectedPossibleMatch
+        {
+            get => _commonDataSelectedPossibleMatch;
+            set { PropertyChanged.ChangeAndNotify(ref _commonDataSelectedPossibleMatch, value, () => CommonDataSelectedPossibleMatch); }
+        }
+
+        public string CommonDataSearchTerm
+        {
+            get => _commonDataSearchTerm;
+            set { PropertyChanged.ChangeAndNotify(ref _commonDataSearchTerm, value, () => CommonDataSearchTerm); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

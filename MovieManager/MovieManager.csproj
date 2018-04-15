@@ -72,6 +72,24 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -79,13 +97,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AutofacInstaller.cs" />
-    <Compile Include="Commands\RelayCommands\SearchForMovieWithTextCommand.cs" />
+    <Compile Include="Commands\RelayCommands\SearchForMovieByTitleCommand.cs" />
+    <Compile Include="Commands\RelayCommands\SelectMatchedMovieCommand.cs" />
     <Compile Include="Commands\RelayCommands\SlideGridCommand.cs" />
     <Compile Include="Commands\RelayCommands\PlayMovieCommand.cs" />
     <Compile Include="Commands\RelayCommands\RelayCommand.cs" />
     <Compile Include="Commands\RelayCommands\ScanForLocalMovieFilesCommand.cs" />
     <Compile Include="Commands\RelayCommands\SetSelectedMovieCommand.cs" />
-    <Compile Include="Contracts\Commands\RelayCommands\ISearchForMovieWithTextCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISearchForMovieByTitleCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISelectMatchedMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\ISlideGridCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IPlayMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IScanForLocalMovieFilesCommand.cs" />
@@ -107,9 +127,6 @@
     <Compile Include="Converters\ScreenResolutionToPageWidthConverter.cs" />
     <Compile Include="Converters\TextToGeometryConverter.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="FindMovieDetails.xaml.cs">
-      <DependentUpon>FindMovieDetails.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\ObservableCollectionHelper.cs" />
     <Compile Include="Helpers\PropertyChangedHelper.cs" />
     <Compile Include="Helpers\WindowEffectHelper.cs" />
@@ -118,10 +135,6 @@
     <Compile Include="Queries\QueryForMoviesByTitle.cs" />
     <Compile Include="ViewModels\CommonDataViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
-    <Page Include="FindMovieDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
