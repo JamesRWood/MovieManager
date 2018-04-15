@@ -18,7 +18,9 @@
         private readonly IScanForLocalMovieFilesCommand _scanForLocalMovieFilesCommand;
         private readonly IPlayMovieCommand _playMovieCommand;
         private readonly ISlideGridCommand _slideGridCommand;
-        private readonly ISearchForMovieWithTextCommand _searchForMovieWithTextCommand;
+        private readonly ISearchForMovieByTitleCommand _searchForMovieByTitleCommand;
+        private readonly ISelectMatchedMovieCommand _selectMatchedMovieCommand;
+
         private ObservableCollection<Movie> _movies;
         private Movie _selectedMovie;
         private ObservableCollection<Movie> _possibleMatches;
@@ -31,7 +33,8 @@
             _scanForLocalMovieFilesCommand = AutofacInstaller.Container.Resolve<IScanForLocalMovieFilesCommand>();
             _playMovieCommand = AutofacInstaller.Container.Resolve<IPlayMovieCommand>();
             _slideGridCommand = AutofacInstaller.Container.Resolve<ISlideGridCommand>();
-            _searchForMovieWithTextCommand = AutofacInstaller.Container.Resolve<ISearchForMovieWithTextCommand>();
+            this._searchForMovieByTitleCommand = AutofacInstaller.Container.Resolve<ISearchForMovieByTitleCommand>();
+            _selectMatchedMovieCommand = AutofacInstaller.Container.Resolve<ISelectMatchedMovieCommand>();
 
             _commonData.PropertyChanged += CommonDataPropertyChanged;
 
@@ -85,7 +88,9 @@
 
         public ICommand SlideGridCommand => _slideGridCommand.Command;
 
-        public ICommand SearchForMovieWithTextCommand => _searchForMovieWithTextCommand.Command;
+        public ICommand SearchForMovieByTitleCommand => this._searchForMovieByTitleCommand.Command;
+
+        public ICommand SelectMatchedMovieCommand => _selectMatchedMovieCommand.Command;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -94,13 +99,19 @@
             switch (e.PropertyName)
             {
                 case "CommonDataMovies":
-                    Movies = _commonData.CommonDataMovies.OrderBy(x => x.Title).ToObservableCollection();
+                    Movies = _commonData.CommonDataMovies?.OrderBy(x => x.Title).ToObservableCollection();
                     break;
                 case "CommonDataSelectedMovie":
                     SelectedMovie = _commonData.CommonDataSelectedMovie;
                     break;
                 case "CommonDataPossibleMatches":
-                    PossibleMatches = _commonData.CommonDataPossibleMatches.ToObservableCollection();
+                    PossibleMatches = _commonData.CommonDataPossibleMatches?.ToObservableCollection();
+                    break;
+                case "CommonDataSelectedPossibleMatch":
+                    SelectedPossibleMatch = _commonData.CommonDataSelectedPossibleMatch;
+                    break;
+                case "CommonDataSearchTerm":
+                    SearchTerm = _commonData.CommonDataSearchTerm;
                     break;
                 default:
                     break;

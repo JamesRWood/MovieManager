@@ -1,4 +1,6 @@
-﻿namespace MovieManager.Commands.RelayCommands
+﻿using MovieManager.Contracts.ViewModels;
+
+namespace MovieManager.Commands.RelayCommands
 {
     using System;
     using System.Windows;
@@ -9,7 +11,13 @@
 
     public class SlideGridCommand : ISlideGridCommand
     {
+        private readonly ICommonDataViewModel _commonData;
         private ICommand _command;
+
+        public SlideGridCommand(ICommonDataViewModel commonData)
+        {
+            _commonData = commonData;
+        }
 
         public ICommand Command => _command ?? (_command = new RelayCommand<object>(Execute, CanExecute));
 
@@ -31,8 +39,16 @@
                 return;
             }
 
+            if (position == 2)
+            {
+                _commonData.CommonDataPossibleMatches = null;
+                _commonData.CommonDataSelectedPossibleMatch = null;
+                _commonData.CommonDataSearchTerm = null;
+                _commonData.CommonDataSearchTerm = string.Empty;
+            }
+
             const int xPos1 = 0;
-            var xPos2 = 0 - (width - 80);
+            var xPos2 = 0 - (width - 40);
 
             var animation = position == 1 ? GetAnimation(xPos2, xPos1) : GetAnimation(xPos1, xPos2);
 

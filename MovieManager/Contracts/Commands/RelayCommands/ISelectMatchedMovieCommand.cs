@@ -2,7 +2,7 @@
 {
     using System.Windows.Input;
 
-    public interface ISearchForMovieWithTextCommand
+    public interface ISelectMatchedMovieCommand : ICommand
     {
         ICommand Command { get; }
     }

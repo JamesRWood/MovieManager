@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow"
         WindowState="Maximized"
@@ -180,20 +181,46 @@
                         </Grid>
                         <Grid Name="MovieSettingsGrid" Background="{StaticResource DarkGrey2}" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" ZIndex="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="8*"/>
-                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="2*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Grid Row="2">
-                                    <Button Content="Back" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
+                                <Grid Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <xctk:WatermarkTextBox Grid.Column="0" Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource WatermarkTextBoxStyle}" Watermark="Enter movie name here..."/>
+                                    <Button Grid.Column="1" Content="Search" Command="{Binding SearchForMovieByTitleCommand}" CommandParameter="{Binding SearchTerm}"/>
+                                </Grid>
+                                <Grid Row="2" Name="PossibleMatchesListContainer">
+                                    <ListView ItemsSource="{Binding PossibleMatches}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedPossibleMatch, BindsDirectlyToSource=True}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=PossibleMatchesListContainer}">
+                                                    <GridViewColumnHeader Style="{StaticResource GridViewColumnHeaderStyle}">Title</GridViewColumnHeader>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="Back" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
                                                 <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
@@ -202,7 +229,28 @@
                                             </MultiBinding>
                                         </Button.CommandParameter>
                                     </Button>
+                                    <Button Grid.Column="1" Content="Confirm" Command="{Binding SelectMatchedMovieCommand}">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                <Binding Path="SelectedPossibleMatch"/>
+                                                <Binding Path="SelectedMovie"/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                    </Button>
                                 </Grid>
+                            </Grid>
+                            <Grid Column="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="12*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="{Binding SelectedPossibleMatch.Title}" Style="{StaticResource MovieHeaderStyle1}"/>
+                                <TextBlock Grid.Row="2" Text="{Binding SelectedPossibleMatch.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
+                                <Image Grid.Row="4" Source="{Binding SelectedPossibleMatch.ImagePath, Converter={StaticResource ImagePathConverter}}" Width="400" Height="564"/>
                             </Grid>
                         </Grid>
                     </Grid>
