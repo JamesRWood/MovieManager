@@ -16,6 +16,8 @@
         <SolidColorBrush x:Key="Grey">#6C6A69</SolidColorBrush>
         <SolidColorBrush x:Key="LightGrey">#DCD6D6</SolidColorBrush>
         <SolidColorBrush x:Key="TmdbPrimary">#01d277</SolidColorBrush>
+        <SolidColorBrush x:Key="TmdbPrimaryMouseOver">#00BE6B</SolidColorBrush>
+        <SolidColorBrush x:Key="TmdbPrimaryPresssed">#00FF90</SolidColorBrush>
 
         <SolidColorBrush x:Key="LightGreen">#01CF0B</SolidColorBrush>
 
@@ -49,14 +51,50 @@
             <Setter Property="Height" Value="32"/>
         </Style>
 
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="ButtonBorder"  CornerRadius="2" BorderThickness="5" Background="Transparent" BorderBrush="{StaticResource TmdbPrimary}" Margin="2">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="3" Direction="45" Opacity="0.8" Color="Black" RenderingBias="Performance"/>
+                            </Border.Effect>
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource TmdbPrimaryMouseOver}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource TmdbPrimaryPresssed}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource LightGrey}"/>
+                                <Setter TargetName="ButtonBorder" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#DCD6D6" Opacity="0.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource LightGrey}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TmdbPrimaryMouseOver}"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="{StaticResource LightGreen}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TmdbPrimaryPresssed}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{StaticResource LightGrey}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
