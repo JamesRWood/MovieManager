@@ -89,8 +89,20 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="50*"/>
                                 </Grid.RowDefinitions>
-                                <Grid Row="0" Name="ButtonContainer">
-                                    <Button Content="DoStuff! =]" Style="{StaticResource ButtonStyle}" Width="{Binding ActualWidth, ElementName=ButtonContainer}" Command="{Binding ScanForLocalMovieFilesCommand}"/>
+                                <Grid Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Content="Scan" Style="{StaticResource ButtonStyle}" Command="{Binding ScanForLocalMovieFilesCommand}"/>
+                                    </Grid>
                                 </Grid>
                                 <Grid Row="2" Name="TitleListContainer">
                                     <ListView ItemsSource="{Binding Movies}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -126,7 +138,8 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="2*"/>
                                                 <RowDefinition Height="2*"/>
-                                                <RowDefinition Height="10*"/>
+                                                <RowDefinition Height="5*"/>
+                                                <RowDefinition Height="5*"/>
                                                 <RowDefinition Height="2*"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
@@ -140,6 +153,20 @@
                                                 <TextBlock Text="{Binding SelectedMovie.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
                                             </StackPanel>
                                             <StackPanel Grid.Row="3">
+                                                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                                    <TextBlock Text="Released: " Style="{StaticResource MovieHeaderStyle2}"/>
+                                                    <TextBlock Text="{Binding SelectedMovie.ReleaseDate}" Style="{StaticResource MovieTextStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                                    <TextBlock Text="Rating: " Style="{StaticResource MovieHeaderStyle2}"/>
+                                                    <TextBlock Text="{Binding SelectedMovie.Rating}" Style="{StaticResource MovieTextStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                                    <TextBlock Text="Run time: " Style="{StaticResource MovieHeaderStyle2}"/>
+                                                    <TextBlock Text="{Binding SelectedMovie.RunTime}" Style="{StaticResource MovieTextStyle}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="4">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
@@ -202,7 +229,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <xctk:WatermarkTextBox Grid.Column="0" Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource WatermarkTextBoxStyle}" Watermark="Enter movie name here..."/>
-                                    <Button Grid.Column="1" Content="Search" Command="{Binding SearchForMovieByTitleCommand}" CommandParameter="{Binding SearchTerm}"/>
+                                    <Button Grid.Column="1" Content="Search" Style="{StaticResource ButtonStyle}" Command="{Binding SearchForMovieByTitleCommand}" CommandParameter="{Binding SearchTerm}"/>
                                 </Grid>
                                 <Grid Row="2" Name="PossibleMatchesListContainer">
                                     <ListView ItemsSource="{Binding PossibleMatches}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedPossibleMatch, BindsDirectlyToSource=True}">

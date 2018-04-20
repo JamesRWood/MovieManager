@@ -21,7 +21,7 @@
                     Title = response.Result.Item.Title,
                     ReleaseDate = response.Result.Item.ReleaseDate,
                     MovieId = response.Result.Item.Id,
-                    Rating = response.Result.Item.Popularity,
+                    Rating = response.Result.Item.VoteAverage,
                     Synopsis = response.Result.Item.Overview,
                     ImagePath = response.Result.Item.PosterPath,
                     TagLine = response.Result.Item.Tagline,
