@@ -144,45 +144,21 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <StackPanel Grid.Row="0">
-                                                <TextBlock Text="{Binding SelectedMovie.TagLine}" Style="{StaticResource MovieHeaderStyle2}"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="1">
-                                                <TextBlock Text="Synopsis" Style="{StaticResource MovieHeaderStyle1}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="2">
-                                                <TextBlock Text="{Binding SelectedMovie.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
+                                                <TextBlock Text="{Binding SelectedMovie.TagLine}" Style="{StaticResource MovieHeaderStyle1}"/>
                                             </StackPanel>
                                             <StackPanel Grid.Row="3">
                                                 <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
-                                                    <TextBlock Text="Released: " Style="{StaticResource MovieHeaderStyle2}"/>
+                                                    <TextBlock Text="Released: " Style="{StaticResource MovieTextStyle}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}"/>
                                                     <TextBlock Text="{Binding SelectedMovie.ReleaseDate}" Style="{StaticResource MovieTextStyle}"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
-                                                    <TextBlock Text="Rating: " Style="{StaticResource MovieHeaderStyle2}"/>
+                                                    <TextBlock Text="Rating: " Style="{StaticResource MovieTextStyle}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}"/>
                                                     <TextBlock Text="{Binding SelectedMovie.Rating}" Style="{StaticResource MovieTextStyle}"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
-                                                    <TextBlock Text="Run time: " Style="{StaticResource MovieHeaderStyle2}"/>
+                                                    <TextBlock Text="Run time: " Style="{StaticResource MovieTextStyle}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}"/>
                                                     <TextBlock Text="{Binding SelectedMovie.RunTime}" Style="{StaticResource MovieTextStyle}"/>
                                                 </StackPanel>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="4">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Button Grid.Column="0" Content="Play" Style="{StaticResource ButtonStyle}" Command="{Binding PlayMovieCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>
-                                                    <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
-                                                        <Button.CommandParameter>
-                                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                                                <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
-                                                                <Binding Source="{StaticResource Position2}"/>
-                                                                <Binding ElementName="MainDashboardGrid"/>
-                                                            </MultiBinding>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                </Grid>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Column="1">
@@ -193,12 +169,35 @@
                                             </Grid.ColumnDefinitions>
                                             <Grid Column="1">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="30*"/>
+                                                    <RowDefinition Height="14*"/>
+                                                    <RowDefinition Height="8*"/>
+                                                    <RowDefinition Height="3*"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
                                                 <StackPanel Name="ImageContainer" Grid.Row="0">
-                                                    <!--<Image Source="{Binding SelectedMovie.ImagePath, Converter={StaticResource ImagePathConverter}}" Width="{Binding ActualWidth, ElementName=ImageContainer}" Stretch="Uniform"/>-->
-                                                    <Image Source="{Binding SelectedMovie.ImagePath, Converter={StaticResource ImagePathConverter}}" Width="400" Height="564"/>
+                                                    <Image Source="{Binding SelectedMovie.ImagePath, Converter={StaticResource ImagePathConverter}}" Width="{Binding ActualWidth, ElementName=ImageContainer}" Stretch="Uniform"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Row="1" Orientation="Vertical">
+                                                    <TextBlock Text="Synopsis" Style="{StaticResource MovieHeaderStyle1}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}"/>
+                                                    <TextBlock Text="{Binding SelectedMovie.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Row="2">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Grid.Column="0" Content="Play" Style="{StaticResource ButtonStyle}" Command="{Binding PlayMovieCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>
+                                                        <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
+                                                            <Button.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                                    <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
+                                                                    <Binding Source="{StaticResource Position2}"/>
+                                                                    <Binding ElementName="MainDashboardGrid"/>
+                                                                </MultiBinding>
+                                                            </Button.CommandParameter>
+                                                        </Button>
+                                                    </Grid>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>

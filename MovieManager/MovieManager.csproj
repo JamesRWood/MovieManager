@@ -103,13 +103,11 @@
     <Compile Include="Commands\RelayCommands\PlayMovieCommand.cs" />
     <Compile Include="Commands\RelayCommands\RelayCommand.cs" />
     <Compile Include="Commands\RelayCommands\ScanForLocalMovieFilesCommand.cs" />
-    <Compile Include="Commands\RelayCommands\SetSelectedMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\ISearchForMovieByTitleCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\ISelectMatchedMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\ISlideGridCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IPlayMovieCommand.cs" />
     <Compile Include="Contracts\Commands\RelayCommands\IScanForLocalMovieFilesCommand.cs" />
-    <Compile Include="Contracts\Commands\RelayCommands\ISetSelectedMovieCommand.cs" />
     <Compile Include="Contracts\Controllers\IApiController.cs" />
     <Compile Include="Contracts\Controllers\IFileController.cs" />
     <Compile Include="Contracts\Queries\IQueryBase.cs" />
