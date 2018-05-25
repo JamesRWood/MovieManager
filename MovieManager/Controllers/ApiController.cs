@@ -34,25 +34,29 @@
             }
 
             var formattedTitle = Regex.Replace(movie.Title, Core.DateTagRegex, string.Empty).Trim();
-            if (possibleMatches.Count(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase)) == 1)
+            if (possibleMatches.Count(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase)) != 1)
             {
-                var match = possibleMatches.FirstOrDefault(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase));
-                if (match != null)
-                {
-                    match.FileLocation = movie.FileLocation;
-                    match.BackdropColor = match.GetImageMajorityColor();
-
-                    if (!string.Equals(match.Title, movie.Title))
-                    {
-                        var newFilePath = _fileController.RenameFile(movie.FileLocation, formattedTitle);
-                        match.FileLocation = newFilePath;
-                    }
-
-                    return match;
-                }
+                return movie;
             }
 
-            return movie;
+            var match = possibleMatches.FirstOrDefault(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase));
+            if (match == null)
+            {
+                return movie;
+            }
+            
+            match.FileLocation = movie.FileLocation;
+            match.BackdropColor = match.GetImageMajorityColor();
+
+            if (string.Equals(match.Title, movie.Title))
+            {
+                return match;
+            }
+
+            var newFilePath = _fileController.RenameFile(movie.FileLocation, formattedTitle);
+            match.FileLocation = newFilePath;
+
+            return match;
         }
 
         public async Task<List<Movie>> GetPossibleMatchesFromApi(string title)

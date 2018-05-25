@@ -5,10 +5,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
-    using Contracts;
     using Contracts.Commands.RelayCommands;
     using Contracts.Controllers;
     using Contracts.ViewModels;
+    using Helpers;
     using Models;
 
     public class ScanForLocalMovieFilesCommand : IScanForLocalMovieFilesCommand
@@ -42,7 +42,8 @@
                     concurrentMovieList.Add(mov);
             });
             
-            _commonData.CommonDataMovies = concurrentMovieList.OrderBy(x => x.Title).ToList();
+            _commonData.UpdateValue(cd => cd.CommonDataMovies, concurrentMovieList.OrderBy(x => x.Title).ToList());
+
             _fileController.StoreMovieData(concurrentMovieList.ToList());
         }
 

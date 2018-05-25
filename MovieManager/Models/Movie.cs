@@ -1,7 +1,9 @@
 ﻿namespace MovieManager.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows.Media;
+    using DM.MovieApi.MovieDb.Genres;
 
     public class Movie
     {
@@ -29,5 +31,7 @@
         public int? RunTime { get; set; }
 
         public Color BackdropColor { get; set; }
+
+        public IReadOnlyList<Genre> Genres { get; set; }
     }
 }

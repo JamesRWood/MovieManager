@@ -25,7 +25,8 @@
                     Synopsis = response.Result.Item.Overview,
                     ImagePath = response.Result.Item.PosterPath,
                     TagLine = response.Result.Item.Tagline,
-                    RunTime = response.Result.Item.Runtime
+                    RunTime = response.Result.Item.Runtime,
+                    Genres = response.Result.Item.Genres
                 };
             }
 

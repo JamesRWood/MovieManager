@@ -1,6 +1,4 @@
-﻿using MovieManager.Contracts.ViewModels;
-
-namespace MovieManager.Commands.RelayCommands
+﻿namespace MovieManager.Commands.RelayCommands
 {
     using System;
     using System.Windows;
@@ -8,6 +6,7 @@ namespace MovieManager.Commands.RelayCommands
     using System.Windows.Media;
     using System.Windows.Media.Animation;
     using Contracts.Commands.RelayCommands;
+    using MovieManager.Contracts.ViewModels;
 
     public class SlideGridCommand : ISlideGridCommand
     {

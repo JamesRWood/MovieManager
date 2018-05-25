@@ -1,12 +1,12 @@
 ﻿namespace MovieManager.Commands.RelayCommands
 {
+    using System;
+    using System.Windows.Input;
     using MovieManager.Contracts.Commands.RelayCommands;
     using MovieManager.Contracts.Controllers;
     using MovieManager.Contracts.ViewModels;
     using MovieManager.Helpers;
     using MovieManager.Models;
-    using System;
-    using System.Windows.Input;
 
     public class SelectMatchedMovieCommand : ISelectMatchedMovieCommand
     {
@@ -41,14 +41,13 @@
             _commonData.CommonDataMovies.Remove(currentSelectedMovie);
 
             selectedPossibleMatch.BackdropColor = selectedPossibleMatch.GetImageMajorityColor();
-
-            _commonData.CommonDataSelectedMovie = null;
-            _commonData.CommonDataSelectedMovie = selectedPossibleMatch;
+            
+            _commonData.UpdateValue(cd => cd.CommonDataSelectedMovie, selectedPossibleMatch);
 
             var movies = _commonData.CommonDataMovies;
-            _commonData.CommonDataMovies = null;
             movies.Add(selectedPossibleMatch);
-            _commonData.CommonDataMovies = movies;
+            
+            _commonData.UpdateValue(cd => cd.CommonDataMovies, movies);
 
             _fileController.StoreMovieData(movies);
         }

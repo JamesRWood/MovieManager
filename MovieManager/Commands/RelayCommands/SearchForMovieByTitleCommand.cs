@@ -6,6 +6,7 @@
     using Contracts.Commands.RelayCommands;
     using Contracts.Controllers;
     using Contracts.ViewModels;
+    using Helpers;
 
     public class SearchForMovieByTitleCommand : ISearchForMovieByTitleCommand
     {
@@ -29,8 +30,8 @@
             {
                 return;
             }
-
-            _commonData.CommonDataPossibleMatches = Task.Run(() => _apiController.GetPossibleMatchesFromApi(searchTerm)).Result;
+            
+            _commonData.UpdateValue(cd => cd.CommonDataPossibleMatches, Task.Run(() => _apiController.GetPossibleMatchesFromApi(searchTerm)).Result);
         }
 
         public bool CanExecute(object parameter)
