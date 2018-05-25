@@ -39,7 +39,7 @@
             _commonData.PropertyChanged += CommonDataPropertyChanged;
 
             var fileController = AutofacInstaller.Container.Resolve<IFileController>();
-            _commonData.CommonDataMovies = fileController.GetMovieDataFromLocalLibraryFile();
+            _commonData.UpdateValue(cd => cd.CommonDataMovies, fileController.GetMovieDataFromLocalLibraryFile());
         }
 
         #region MainDashboardGrid Properties
