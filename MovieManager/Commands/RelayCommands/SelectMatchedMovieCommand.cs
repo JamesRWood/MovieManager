@@ -36,8 +36,8 @@
             {
                 return;
             }
-
-            selectedPossibleMatch.FileLocation = currentSelectedMovie.FileLocation;
+            
+            selectedPossibleMatch.FileLocation = _fileController.RenameFile(currentSelectedMovie.FileLocation, selectedPossibleMatch.Title);
             _commonData.CommonDataMovies.Remove(currentSelectedMovie);
 
             selectedPossibleMatch.BackdropColor = selectedPossibleMatch.GetImageMajorityColor();

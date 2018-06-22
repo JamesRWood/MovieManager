@@ -12,58 +12,50 @@
 
     public class FileController : IFileController
     {
+        private const string DefaultDirectory = "C:\\";
         private const string MovieDataFileName = "MovieLibraryData.json";
+        private string _mainDirectory => ConfigurationManager.AppSettings["Directory"];
 
         public List<Movie> GetMovieDataFromLocalLibraryFile()
         {
-            var movies = new List<Movie>();
-
-            var mainDirectory = ConfigurationManager.AppSettings["Directory"];
-            if (mainDirectory == "c:")
+            if (string.Equals(_mainDirectory,  DefaultDirectory))
             {
-                return movies;
+                return new List<Movie>();
+            }
+
+            var movieLibraryFilePath = Path.Combine(_mainDirectory, MovieDataFileName);
+            if (!File.Exists(movieLibraryFilePath))
+            {
+                return new List<Movie>();
             }
 
             var serializer = new JsonSerializer();
-            var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
-
-            if (!File.Exists(movieLibraryFilePath))
-            {
-                return movies;
-            }
-
-            var jsonData = serializer.Deserialize<List<Movie>>(new JsonTextReader(new StreamReader(movieLibraryFilePath)));
-            jsonData?.ForEach(x => movies.Add(x));
-
-            return movies.OrderBy(x => x.Title).ToList();
+            return serializer.Deserialize<List<Movie>>(new JsonTextReader(new StreamReader(movieLibraryFilePath))).OrderBy(x => x.Title).ToList();
         }
 
         public List<Movie> FindLocalMovieFiles()
         {
-            var movies = new ConcurrentBag<Movie>();
-            var mainDirectory = ConfigurationManager.AppSettings["Directory"];
-
-            if (mainDirectory == "C:\\")
+            if (string.Equals(_mainDirectory, DefaultDirectory))
             {
-                return movies.ToList();
+                return new List<Movie>();
             }
 
+            var movies = new ConcurrentBag<Movie>();
             var parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 4 };
-
-            Parallel.ForEach(Directory.GetFiles(mainDirectory), parallelOptions, file =>
+            Parallel.ForEach(Directory.GetFiles(_mainDirectory), parallelOptions, file =>
             {
                 var fileInfo = new FileInfo(file);
                 if (Core.MovieFileTypes.Any(x => fileInfo.Extension == x))
                 {
                     movies.Add(new Movie
                     {
-                        Title = fileInfo.Name.Replace(fileInfo.Extension, ""),
+                        Title = fileInfo.Name.Replace(fileInfo.Extension, string.Empty),
                         FileLocation = fileInfo.FullName
                     });
                 }
             });
 
-            Parallel.ForEach(Directory.GetDirectories(mainDirectory), parallelOptions, directory =>
+            Parallel.ForEach(Directory.GetDirectories(_mainDirectory), parallelOptions, directory =>
             {
                 Parallel.ForEach(Directory.GetFiles(directory), parallelOptions, file =>
                 {
@@ -72,7 +64,7 @@
                     {
                         movies.Add(new Movie
                         {
-                            Title = fileInfo.Name.Replace(fileInfo.Extension, ""),
+                            Title = fileInfo.Name.Replace(fileInfo.Extension,string.Empty),
                             FileLocation = fileInfo.FullName
                         });
                     }
@@ -84,13 +76,12 @@
 
         public void StoreMovieData(IList<Movie> movies)
         {
-            var mainDirectory = ConfigurationManager.AppSettings["Directory"];
-            if (mainDirectory == "c:")
+            if (string.Equals(_mainDirectory, DefaultDirectory))
             {
                 return;
             }
 
-            var movieLibraryFilePath = Path.Combine(mainDirectory, MovieDataFileName);
+            var movieLibraryFilePath = Path.Combine(_mainDirectory, MovieDataFileName);
             using (var file = File.CreateText(movieLibraryFilePath))
             {
                 var serializer = new JsonSerializer();
