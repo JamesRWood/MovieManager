@@ -16,7 +16,7 @@
         private readonly ICommonDataViewModel _commonData;
         private readonly IApiController _apiController;
         private readonly IFileController _fileController;
-        private readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 8 };
+        private readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 4 };
         private ICommand _command;
         
         public ScanForLocalMovieFilesCommand(
@@ -33,17 +33,24 @@
 
         public void Execute(object parameter)
         {
+            var currentMovieLibrary = _fileController.GetMovieDataFromLocalLibraryFile();
             var movies = _fileController.FindLocalMovieFiles();
 
             var concurrentMovieList = new ConcurrentBag<Movie>();
             Parallel.ForEach(movies, _parallelOptions, m =>
             {
+                if (currentMovieLibrary.Any(x => x.FileLocation == m.FileLocation && !string.IsNullOrEmpty(x.TagLine) && !string.IsNullOrEmpty(x.Title)))
+                {
+                    concurrentMovieList.Add(currentMovieLibrary.FirstOrDefault(x => x.FileLocation == m.FileLocation));
+                }
+                else
+                {
                     var mov = Task.Run(() => _apiController.EnrichMovieMatchedByTitle(m)).Result;
                     concurrentMovieList.Add(mov);
+                }
             });
             
             _commonData.UpdateValue(cd => cd.CommonDataMovies, concurrentMovieList.OrderBy(x => x.Title).ToList());
-
             _fileController.StoreMovieData(concurrentMovieList.ToList());
         }
 

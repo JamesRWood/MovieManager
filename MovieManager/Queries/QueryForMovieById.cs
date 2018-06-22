@@ -1,5 +1,6 @@
 ﻿namespace MovieManager.Queries
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Contracts.Queries;
     using DM.MovieApi;
@@ -26,7 +27,7 @@
                     ImagePath = response.Result.Item.PosterPath,
                     TagLine = response.Result.Item.Tagline,
                     RunTime = response.Result.Item.Runtime,
-                    Genres = response.Result.Item.Genres
+                    Genres = response.Result.Item.Genres.OrderBy(x => x.Name).ToList()
                 };
             }
 

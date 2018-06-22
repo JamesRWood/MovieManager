@@ -1,15 +1,14 @@
 ﻿namespace MovieManager.Controllers
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Contracts.Controllers;
     using Helpers;
+    using Models;
     using MovieManager.Contracts.Queries;
-    using Movie = Models.Movie;
 
     public class ApiController : IApiController
     {
@@ -61,18 +60,9 @@
 
         public async Task<List<Movie>> GetPossibleMatchesFromApi(string title)
         {
-            var possibleMatches = new ConcurrentBag<Movie>();
             var matches = await _queryForMoviesByTitle.Execute(title);
 
-            foreach (var match in matches)
-            {
-                if (match != null)
-                {
-                    possibleMatches.Add(match);
-                }
-            }
-
-            return possibleMatches.ToList();
+            return matches.Where(match => match != null).ToList();
         }
     }
 }
