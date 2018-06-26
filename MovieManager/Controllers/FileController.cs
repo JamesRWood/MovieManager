@@ -14,6 +14,7 @@
     {
         private const string DefaultDirectory = "C:\\";
         private const string MovieDataFileName = "MovieLibraryData.json";
+
         private string _mainDirectory => ConfigurationManager.AppSettings["Directory"];
 
         public List<Movie> GetMovieDataFromLocalLibraryFile()

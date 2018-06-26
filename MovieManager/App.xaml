@@ -18,6 +18,7 @@
         <SolidColorBrush x:Key="TmdbPrimary">#01d277</SolidColorBrush>
         <SolidColorBrush x:Key="TmdbPrimaryMouseOver">#00BE6B</SolidColorBrush>
         <SolidColorBrush x:Key="TmdbPrimaryPresssed">#00FF90</SolidColorBrush>
+        <SolidColorBrush x:Key="Transparent">#00FFFFFF</SolidColorBrush>
 
         <SolidColorBrush x:Key="LightGreen">#01CF0B</SolidColorBrush>
 
@@ -158,18 +159,44 @@
             <Setter Property="Foreground" Value="{StaticResource DarkGrey2}"/>
         </Style>
 
-        <Style x:Key="MovieListItemStyle" TargetType="{x:Type ListView}">
+        <Style x:Key="ListTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+        </Style>
+
+        <Style x:Key="MovieListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Transparent"/>
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="#2D2D2D"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#01d277"/>
-                    <Setter Property="Background" Value="#2D2D2D"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border Name="MoviesListContentItemBorder" Padding="2" Margin="2,0,2,0">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="MoviesListContentItemBorder" Property="Background" Value="{StaticResource TmdbPrimaryMouseOver}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="MoviesListContentItemBorder" Property="Background" Value="{StaticResource TmdbPrimaryPresssed}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="ScrollBarStyle" TargetType="ScrollBar">

@@ -3,16 +3,21 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts.Queries;
-    using DM.MovieApi;
     using DM.MovieApi.MovieDb.Movies;
     using Movie = Models.Movie;
 
     public class QueryForMovieById : IQueryForMovieById
     {
+        private readonly IApiMovieRequest _apiRequest;
+
+        public QueryForMovieById(IApiMovieRequest apiRequest)
+        {
+            _apiRequest = apiRequest;
+        }
+
         public Movie Execute(int movieId)
         {
-            var api = MovieDbFactory.Create<IApiMovieRequest>().Value;
-            var response = Task.Run(() => api.FindByIdAsync(movieId));
+            var response = Task.Run(() => _apiRequest.FindByIdAsync(movieId));
 
             Movie movie = null;
             if (response.Result.Item != null)

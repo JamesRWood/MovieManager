@@ -8,7 +8,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var path = value?.ToString() ?? "";
+            var path = value?.ToString() ?? string.Empty;
             if (string.IsNullOrEmpty(path))
             {
                 return string.Empty;

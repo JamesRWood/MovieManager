@@ -31,14 +31,14 @@
             {
                 return movie;
             }
-
-            var formattedTitle = Regex.Replace(movie.Title, Core.DateTagRegex, string.Empty).Trim();
-            if (possibleMatches.Count(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase)) != 1)
+            
+            var formattedTitle = FormatMovieTitle(movie.Title);
+            if (possibleMatches.Count(x => string.Equals(FormatMovieTitle(x.Title), formattedTitle, StringComparison.InvariantCultureIgnoreCase)) != 1)
             {
                 return movie;
             }
 
-            var match = possibleMatches.FirstOrDefault(x => string.Equals(x.Title, formattedTitle, StringComparison.InvariantCultureIgnoreCase));
+            var match = possibleMatches.FirstOrDefault(x => string.Equals(FormatMovieTitle(x.Title), formattedTitle, StringComparison.InvariantCultureIgnoreCase));
             if (match == null)
             {
                 return movie;
@@ -52,7 +52,7 @@
                 return match;
             }
 
-            var newFilePath = _fileController.RenameFile(movie.FileLocation, formattedTitle);
+            var newFilePath = _fileController.RenameFile(movie.FileLocation, match.Title);
             match.FileLocation = newFilePath;
 
             return match;
@@ -63,6 +63,11 @@
             var matches = await _queryForMoviesByTitle.Execute(title);
 
             return matches.Where(match => match != null).ToList();
+        }
+
+        private string FormatMovieTitle(string input)
+        {
+            return Regex.Replace(Regex.Replace(input, Core.DateTagRegex, string.Empty).Trim(), Core.PunctuationRegex, string.Empty);
         }
     }
 }
