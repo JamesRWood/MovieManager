@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Contracts.Commands.RelayCommands;
@@ -16,7 +17,8 @@
         private readonly ICommonDataViewModel _commonData;
         private readonly IApiController _apiController;
         private readonly IFileController _fileController;
-        private readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 4 };
+        //// There's an issue when increasing the parallelism. Concurrent calls to the API don't seem to work very well
+        private readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 1 };
         private ICommand _command;
         
         public ScanForLocalMovieFilesCommand(
@@ -33,20 +35,24 @@
 
         public void Execute(object parameter)
         {
-            var currentMovieLibrary = _fileController.GetMovieDataFromLocalLibraryFile();
-            var movies = _fileController.FindLocalMovieFiles();
+            var exisitingMovieLibrary = _fileController.GetMovieDataFromLocalLibraryFile();
+            var movies = new ConcurrentBag<Movie>(_fileController.FindLocalMovieFiles());
 
             var concurrentMovieList = new ConcurrentBag<Movie>();
             Parallel.ForEach(movies, _parallelOptions, m =>
             {
-                if (currentMovieLibrary.Any(x => x.FileLocation == m.FileLocation && !string.IsNullOrEmpty(x.TagLine) && !string.IsNullOrEmpty(x.Title)))
+                var existingMatch = exisitingMovieLibrary.FirstOrDefault(x => x.FileLocation == m.FileLocation && !string.IsNullOrEmpty(x.TagLine) && !string.IsNullOrEmpty(x.Title));
+                if (existingMatch != null)
                 {
-                    concurrentMovieList.Add(currentMovieLibrary.FirstOrDefault(x => x.FileLocation == m.FileLocation));
+                    concurrentMovieList.Add(existingMatch);
                 }
                 else
                 {
                     var mov = Task.Run(() => _apiController.EnrichMovieMatchedByTitle(m)).Result;
                     concurrentMovieList.Add(mov);
+                    
+                    //// Yeh......ought to look into issues around API latency to get around this
+                    Thread.Sleep(500);
                 }
             });
             

@@ -75,7 +75,7 @@
                     <Border.Effect>
                         <DropShadowEffect Color="Black" Opacity="1" Direction="45" ShadowDepth="2" BlurRadius="30" RenderingBias="Performance" />
                     </Border.Effect>
-                    <Grid Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ClipToBounds="True" FlowDirection="LeftToRight">
+                    <Grid Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ClipToBounds="True" FlowDirection="LeftToRight" MinHeight="1000">
                         <Grid Name="MainDashboardGrid" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ZIndex="1">
                             <Grid.Effect>
                                 <DropShadowEffect Color="Black" Opacity="1" Direction="90" ShadowDepth="2" BlurRadius="30" RenderingBias="Performance" />
@@ -106,18 +106,16 @@
                                     </Grid>
                                 </Grid>
                                 <Grid Row="2" Name="TitleListContainer">
-                                    <ListView ItemsSource="{Binding Movies}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                        <ListView.Resources>
+                                    <ListBox ItemsSource="{Binding Movies}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}" Style="{StaticResource MovieListStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.Resources>
                                             <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollBarStyle}"/>
-                                        </ListView.Resources>
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=TitleListContainer}">
-                                                    <GridViewColumnHeader Style="{StaticResource GridViewColumnHeaderStyle}" Content="Title" FontSize="36" HorizontalContentAlignment="Left" Padding="10,0,0,0" BorderThickness="0" BorderBrush="{StaticResource DarkGrey1}"/>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
+                                        </ListBox.Resources>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <customControls:ListItemControl ListItemDisplayText="{Binding Title}" ListItemBackgroundBrush="{StaticResource Transparent}" ListItemForegroundBrush="{StaticResource TmdbPrimary}" ListItemTextStyle="{StaticResource ListTextStyle}" ListItemWidth="{Binding ActualWidth, ElementName=TitleListContainer}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
                                 </Grid>
                             </Grid>
                             <Grid Column="1" Background="{StaticResource HatchBrush}" ClipToBounds="True">
@@ -152,9 +150,11 @@
                                                         <TextBlock Text="{Binding SelectedMovie.TagLine}" Style="{StaticResource MovieHeaderStyle1}"/>
                                                     </StackPanel>
                                                     <Grid Grid.Row="2" ClipToBounds="True" VerticalAlignment="Center">
-                                                        <UniformGrid Columns="3" VerticalAlignment="Center">
-                                                            <TextBlock Margin="5,0,5,13" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Text="{Binding SelectedMovie.ReleaseDate, StringFormat={}{0:yyyy}}" Style="{StaticResource MovieHeaderStyle2}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}" FontSize="18" Foreground="{StaticResource TmdbPrimary}"/>
-                                                            <TextBlock Margin="5,0,5,13" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Text="{Binding SelectedMovie.RunTime, StringFormat={}{0}m}" Style="{StaticResource MovieHeaderStyle2}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}" FontSize="18" Foreground="{StaticResource TmdbPrimary}"/>
+                                                        <UniformGrid Columns="2" VerticalAlignment="Center">
+                                                            <UniformGrid Rows="2" >
+                                                                <TextBlock Margin="60,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Text="{Binding SelectedMovie.ReleaseDate, StringFormat={}{0:yyyy}}" Style="{StaticResource MovieHeaderStyle2}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}" FontSize="18" Foreground="{StaticResource TmdbPrimary}"/>
+                                                                <TextBlock Margin="60,0,0,35" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Text="{Binding SelectedMovie.RunTime, StringFormat={}{0}m}" Style="{StaticResource MovieHeaderStyle2}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}" FontSize="18" Foreground="{StaticResource TmdbPrimary}"/>
+                                                            </UniformGrid>
                                                             <customControls:VerticalOneToTenBarControl 
                                                                 DisplayValue="{Binding SelectedMovie.Rating}"
                                                                 DisplayText="{Binding SelectedMovie.Rating}"
@@ -166,13 +166,13 @@
                                                         </UniformGrid>
                                                     </Grid>
                                                     <Grid Row="3">
-                                                        <ListBox ItemsSource="{Binding SelectedMovie.Genres}" Background="Transparent" BorderBrush="Transparent">
-                                                            <ListBox.ItemTemplate>
+                                                        <ItemsControl ItemsSource="{Binding SelectedMovie.Genres}" Margin="100,0,0,0">
+                                                            <ItemsControl.ItemTemplate>
                                                                 <DataTemplate>
                                                                     <customControls:MovieGenreControl MovieGenreDisplayText="{Binding Name}" MovieGenreTextStyle="{StaticResource MovieTextStyle}" MovieGenreBackgroundBrush="{StaticResource TmdbPrimary}" MovieGenreForegroundBrush="{StaticResource HatchBrush}"/>
                                                                 </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
                                                     </Grid>
                                                 </Grid>
                                                 <Grid Column="1">
@@ -266,15 +266,13 @@
                                     <Button Grid.Column="1" Content="Search" Style="{StaticResource ButtonStyle}" Command="{Binding SearchForMovieByTitleCommand}" CommandParameter="{Binding SearchTerm}"/>
                                 </Grid>
                                 <Grid Row="2" Name="PossibleMatchesListContainer">
-                                    <ListView ItemsSource="{Binding PossibleMatches}" Style="{StaticResource MovieListItemStyle}" SelectedItem="{Binding SelectedPossibleMatch, BindsDirectlyToSource=True}">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn DisplayMemberBinding="{Binding Title}" Width="{Binding ActualWidth, ElementName=PossibleMatchesListContainer}">
-                                                    <GridViewColumnHeader Style="{StaticResource GridViewColumnHeaderStyle}">Title</GridViewColumnHeader>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
+                                    <ListBox ItemsSource="{Binding PossibleMatches}" SelectedItem="{Binding SelectedPossibleMatch, BindsDirectlyToSource=True}" Style="{StaticResource MovieListStyle}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <customControls:ListItemControl ListItemDisplayText="{Binding Title}" ListItemTextStyle="{StaticResource ListTextStyle}" ListItemBackgroundBrush="{StaticResource Transparent}" ListItemForegroundBrush="{StaticResource TmdbPrimary}" ListItemWidth="{Binding ActualWidth, ElementName=PossibleMatchesListContainer}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
                                 </Grid>
                                 <Grid Row="4">
                                     <Grid.ColumnDefinitions>

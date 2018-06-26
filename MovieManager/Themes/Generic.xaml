@@ -29,8 +29,20 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type customControls:MovieGenreControl}">
-                    <Border Background="{TemplateBinding MovieGenreBackgroundBrush}" BorderBrush="Transparent" BorderThickness="0">
+                    <Border Background="{TemplateBinding MovieGenreBackgroundBrush}" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Left" Margin="2" Padding="2">
                         <TextBlock Text="{TemplateBinding MovieGenreDisplayText}" Foreground="{TemplateBinding MovieGenreForegroundBrush}" Style="{TemplateBinding MovieGenreTextStyle}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type customControls:ListItemControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type customControls:ListItemControl}">
+                    <Border Background="{TemplateBinding ListItemBackgroundBrush}" BorderBrush="Transparent" BorderThickness="0" Width="{TemplateBinding ListItemWidth}">
+                        <TextBlock Text="{TemplateBinding ListItemDisplayText}" Foreground="{TemplateBinding ListItemForegroundBrush}" Style="{TemplateBinding ListItemTextStyle}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

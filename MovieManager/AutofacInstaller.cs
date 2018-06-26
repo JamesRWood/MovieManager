@@ -9,6 +9,8 @@
     using Contracts.Queries;
     using Contracts.ViewModels;
     using Controllers;
+    using DM.MovieApi;
+    using DM.MovieApi.MovieDb.Movies;
 
     public static class AutofacInstaller
     {
@@ -17,6 +19,8 @@
         public static void RegisterComponents()
         {
             var builder = new ContainerBuilder();
+
+            builder.Register(x => MovieDbFactory.Create<IApiMovieRequest>().Value);
 
             // Controllers
             builder.RegisterType<ApiController>().As<IApiController>().InstancePerLifetimeScope();
