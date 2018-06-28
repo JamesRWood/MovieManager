@@ -1,7 +1,6 @@
 ﻿namespace MovieManager.Commands.RelayCommands
 {
     using System;
-    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Windows.Input;
@@ -16,10 +15,13 @@
 
         public void Execute(object parameter)
         {
-            if (parameter is Movie movie)
+            if (!(parameter is Movie movie))
             {
-                Process.Start(movie.FileLocation);
+                return;
             }
+            
+            var window = new MediaPlayer(movie.FileLocation);
+            window.ShowDialog();
         }
 
         public bool CanExecute(object parameter)
@@ -30,8 +32,7 @@
             }
 
             var fileInfo = new FileInfo(movie.FileLocation);
-            return fileInfo.Exists && Core.MovieFileTypes.Any(x => x == fileInfo.Extension);
-
+            return fileInfo.Exists && Core.MovieFileTypes.Any(x => string.Equals(fileInfo.Extension, x, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public event EventHandler CanExecuteChanged;

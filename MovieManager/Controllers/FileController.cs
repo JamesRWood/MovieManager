@@ -1,5 +1,6 @@
 ﻿namespace MovieManager.Controllers
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Configuration;
@@ -46,7 +47,7 @@
             Parallel.ForEach(Directory.GetFiles(_mainDirectory), parallelOptions, file =>
             {
                 var fileInfo = new FileInfo(file);
-                if (Core.MovieFileTypes.Any(x => fileInfo.Extension == x))
+                if (Core.MovieFileTypes.Any(x => string.Equals(fileInfo.Extension, x, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     movies.Add(new Movie
                     {
@@ -61,7 +62,7 @@
                 Parallel.ForEach(Directory.GetFiles(directory), parallelOptions, file =>
                 {
                     var fileInfo = new FileInfo(file);
-                    if (Core.MovieFileTypes.Any(x => fileInfo.Extension == x))
+                    if (Core.MovieFileTypes.Any(x => string.Equals(fileInfo.Extension, x, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         movies.Add(new Movie
                         {
