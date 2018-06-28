@@ -6,27 +6,27 @@
         xmlns:local="clr-namespace:MovieManager"
         xmlns:wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
         mc:Ignorable="d"
-        Title="MediaPlayer" WindowState="Maximized" WindowStyle="None" Height="450" Width="800" ShowInTaskbar="False">
+        Title="MediaPlayer" WindowState="Maximized" WindowStyle="None" Height="450" Width="800" ShowInTaskbar="True">
     <Grid Background="Black">
-        <Grid ZIndex="1" MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave">
+        <Grid>
             <wpf:VlcPlayer x:Name="VlcPlayer"/>
         </Grid>
-        <Grid ZIndex="1000" Opacity="0.4" MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave">
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="200"/>
             </Grid.RowDefinitions>
-            <Grid Row="1" Visibility="Collapsed" Name="MediaPlayerControlsPanel">
+            <Grid ZIndex="1000" Row="1" Opacity="0.0" Name="MediaPlayerControlsPanel" MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Play" Click="Button_Click_Play" />
-                <Button Grid.Column="1" Content="Pause" Click="Button_Click_Pause" />
-                <Button Grid.Column="2" Content="Stop" Click="Button_Click_Stop" />
-                <Button Grid.Column="3" Content="Close" Click="Button_Click_Close" />
+                <Button Grid.Column="0" Content="Play" Click="Button_Click_Play"/>
+                <Button Grid.Column="1" Content="Pause" Click="Button_Click_Pause"/>
+                <Button Grid.Column="2" Content="Stop" Click="Button_Click_Stop"/>
+                <Button Grid.Column="3" Content="Close" Click="Button_Click_Close"/>
             </Grid>
         </Grid>
     </Grid>

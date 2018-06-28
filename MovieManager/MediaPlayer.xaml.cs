@@ -1,9 +1,10 @@
 ﻿namespace MovieManager
 {
+    using System;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Media;
+    using System.Windows.Media.Animation;
 
     public partial class MediaPlayer : Window
     {
@@ -12,8 +13,6 @@
             InitializeComponent();
             
             VlcPlayer.LoadMedia(filePath);
-            
-            VlcPlayer.Stretch = Stretch.UniformToFill;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -46,12 +45,26 @@
 
         private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
         {
-            MediaPlayerControlsPanel.Visibility = Visibility.Visible;
+            var animation = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 0.4,
+                Duration = TimeSpan.FromSeconds(0.2)
+            };
+
+            MediaPlayerControlsPanel.BeginAnimation(OpacityProperty, animation);
         }
 
         private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            MediaPlayerControlsPanel.Visibility = Visibility.Collapsed;
+            var animation = new DoubleAnimation
+            {
+                From = 0.4,
+                To = 0.0,
+                Duration = TimeSpan.FromSeconds(0.2)
+            };
+
+            MediaPlayerControlsPanel.BeginAnimation(OpacityProperty, animation);
         }
     }
 }
