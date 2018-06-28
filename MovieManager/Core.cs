@@ -9,7 +9,7 @@
 
         public static string PunctuationRegex => @"[ \f\n\r\t\v.,;:']";
 
-        public static List<string> MovieFileTypes => new List<string> { ".mp4", ".avi" };
+        public static List<string> MovieFileTypes => new List<string> { ".mp4", ".avi", ".mov" };
 
         public static Color TransparentColor => Color.FromArgb(0, 0, 0, 0);
     }

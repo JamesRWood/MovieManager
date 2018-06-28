@@ -1,0 +1,33 @@
+﻿<Window x:Class="MovieManager.MediaPlayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MovieManager"
+        xmlns:wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
+        mc:Ignorable="d"
+        Title="MediaPlayer" WindowState="Maximized" WindowStyle="None" Height="450" Width="800" ShowInTaskbar="False">
+    <Grid Background="Black">
+        <Grid ZIndex="1" MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave">
+            <wpf:VlcPlayer x:Name="VlcPlayer"/>
+        </Grid>
+        <Grid ZIndex="1000" Opacity="0.4" MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <Grid Row="1" Visibility="Collapsed" Name="MediaPlayerControlsPanel">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Play" Click="Button_Click_Play" />
+                <Button Grid.Column="1" Content="Pause" Click="Button_Click_Pause" />
+                <Button Grid.Column="2" Content="Stop" Click="Button_Click_Stop" />
+                <Button Grid.Column="3" Content="Close" Click="Button_Click_Close" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
