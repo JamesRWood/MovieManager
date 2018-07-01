@@ -7,7 +7,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type customControls:VerticalOneToTenBarControl}">
-                    <StackPanel Margin="5,0,5,15" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <StackPanel Margin="5,0,5,15" HorizontalAlignment="Center">
                         <Grid Width="50" Height="120">
                             <Grid Background="Transparent" Height="100" VerticalAlignment="Top" ClipToBounds="True" Visibility="{TemplateBinding VisibilityIndicator}">
                                 <ProgressBar VerticalAlignment="Bottom" Minimum="0" Maximum="10" Value="{TemplateBinding DisplayValue}" Orientation="Vertical" Width="50" Height="100" Visibility="{TemplateBinding VisibilityIndicator}" BorderThickness="0" Foreground="{TemplateBinding ForegroundBrush}" Background="Transparent">

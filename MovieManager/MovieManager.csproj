@@ -206,5 +206,10 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PauseIcon.png" />
+    <Resource Include="PlayIcon.png" />
+    <Resource Include="StopIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
