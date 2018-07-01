@@ -156,7 +156,7 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="Foreground" Value="{StaticResource DarkGrey2}"/>
+            <Setter Property="Foreground" Value="{StaticResource LightGrey}"/>
         </Style>
 
         <Style x:Key="ListTextStyle" TargetType="{x:Type TextBlock}">
