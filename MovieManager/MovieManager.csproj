@@ -211,5 +211,13 @@
     <Resource Include="PlayIcon.png" />
     <Resource Include="StopIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PauseIcon_Clicked.png" />
+    <Resource Include="PauseIcon_MouseOver.png" />
+    <Resource Include="PlayIcon_Clicked.png" />
+    <Resource Include="PlayIcon_MouseOver.png" />
+    <Resource Include="StopIcon_Clicked.png" />
+    <Resource Include="StopIcon_MouseOver.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

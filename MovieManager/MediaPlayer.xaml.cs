@@ -24,6 +24,8 @@
         private void Button_Click_Stop(object sender, RoutedEventArgs e)
         {
             VlcPlayer.Stop();
+            VlcPlayer.Dispose();
+            Close();
         }
 
         private void Button_Click_Pause(object sender, RoutedEventArgs e)
@@ -34,13 +36,6 @@
         private void Button_Click_Play(object sender, RoutedEventArgs e)
         {
             VlcPlayer.Play();
-        }
-
-        private void Button_Click_Close(object sender, RoutedEventArgs e)
-        {
-            VlcPlayer.Stop();
-            VlcPlayer.Dispose();
-            Close();
         }
 
         private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
