@@ -124,7 +124,6 @@
                     <DropShadowEffect Color="Black" Opacity="0.6" Direction="45" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="Padding" Value="0,40,0,0"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
