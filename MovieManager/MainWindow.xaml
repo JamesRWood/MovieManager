@@ -1,60 +1,309 @@
 ﻿<Window x:Class="MovieManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MovieManager"
         xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:customControls="clr-namespace:MovieManager.CustomControls"
         mc:Ignorable="d"
         Title="MainWindow"
         WindowState="Maximized"
-        WindowStyle="ToolWindow">
+        WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <viewModels:DashboardViewModel />
+        <viewModels:DashboardViewModel/>
     </Window.DataContext>
     <Grid Background="{StaticResource HatchBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="{Binding Converter={StaticResource ScreenResolutionToPageWidthConverter}, ConverterParameter={x:Static SystemParameters.FullPrimaryScreenWidth}}"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Column="1">
-            <Border>
-                <Border.Effect>
-                    <DropShadowEffect />
-                </Border.Effect>
-                <Grid Column="1" Background="{StaticResource LightGrey}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="16*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Row="1">
+        <Grid x:Name="MainGrid">
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="(Grid.Background).(RadialGradientBrush.GradientStops)[0].Color" To="{Binding SelectedMovie.BackdropColor, NotifyOnTargetUpdated=True}" Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+            <Grid.Background>
+                <RadialGradientBrush GradientOrigin="0.5,3" ColorInterpolationMode="ScRgbLinearInterpolation" RadiusX="0.8" RadiusY="0.8" Opacity="0.8">
+                    <GradientStop Color="{Binding BaseColor}" Offset="0.6"/>
+                    <GradientStop Color="{Binding BaseColor}" Offset="1.0"/>
+                </RadialGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="{Binding Converter={StaticResource ScreenResolutionToPageWidthConverter}, ConverterParameter={x:Static SystemParameters.FullPrimaryScreenWidth}}"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Grid Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Column="0">
+                        <Image HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Source="https://www.themoviedb.org/static_cache/v4/logos/408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99.png">
+                            <Image.Effect>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="3" Direction="45" Opacity="0.8" Color="Black" RenderingBias="Performance"/>
+                            </Image.Effect>
+                        </Image>
+                    </Grid>
+                    <Grid Column="1" Name="MovieTitleContainer">
+                        <Rectangle Margin="0,20,0,10" Width="{Binding ActualWidth, ElementName=MovieTitleContainer}">
+                            <Rectangle.Effect>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="3" Direction="45" Opacity="0.8" Color="Black" RenderingBias="Performance"/>
+                            </Rectangle.Effect>
+                            <Rectangle.Fill>
+                                <DrawingBrush Stretch="Uniform" AlignmentX="Left" AlignmentY="Center">
+                                    <DrawingBrush.Drawing>
+                                        <GeometryDrawing Geometry="{Binding SelectedMovie.Title, Converter={StaticResource TextToGeometryConverter}}" Brush="Transparent">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="0.5" Brush="{StaticResource TmdbPrimary}"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Grid>
+                </Grid>
+                <Border Grid.Row="1" Name="MainDashboardBorder">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" Opacity="1" Direction="45" ShadowDepth="2" BlurRadius="30" RenderingBias="Performance" />
+                    </Border.Effect>
+                    <Grid Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ClipToBounds="True" FlowDirection="LeftToRight">
+                        <Grid Name="MainDashboardGrid" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" Background="{StaticResource DarkGrey1}" ZIndex="1">
+                            <Grid.Effect>
+                                <DropShadowEffect Color="Black" Opacity="1" Direction="90" ShadowDepth="2" BlurRadius="30" RenderingBias="Performance" />
+                            </Grid.Effect>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="10*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Column="0">
-                                <ListView ItemsSource="{Binding Movies}" Background="{StaticResource LightGrey}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Width="100" Header="Title" DisplayMemberBinding="{Binding Title}"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="50*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Content="Scan" Style="{StaticResource ButtonStyle}" Margin="5" Command="{Binding ScanForLocalMovieFilesCommand}"/>
+                                    </Grid>
+                                </Grid>
+                                <Grid Row="2" Name="TitleListContainer">
+                                    <ListBox ItemsSource="{Binding Movies}" SelectedItem="{Binding SelectedMovie, BindsDirectlyToSource=True}" Style="{StaticResource MovieListStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.Resources>
+                                            <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollBarStyle}"/>
+                                        </ListBox.Resources>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <customControls:ListItemControl ListItemDisplayText="{Binding Title}" ListItemBackgroundBrush="{StaticResource Transparent}" ListItemForegroundBrush="{StaticResource TmdbPrimary}" ListItemTextStyle="{StaticResource ListTextStyle}" ListItemWidth="{Binding ActualWidth, ElementName=TitleListContainer}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Grid>
                             </Grid>
+                            <Grid Column="1" Background="{StaticResource HatchBrush}" ClipToBounds="True">
+                                <Border Background="Transparent" BorderThickness="25" BorderBrush="{StaticResource DarkGrey1}" ClipToBounds="True" Margin="0, -1, -1, 0">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="6" ShadowDepth="4" Direction="90" Opacity="0.8" Color="Black" RenderingBias="Performance"/>
+                                    </Border.Effect>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="80*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="60*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="32*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="8*"/>
+                                                    <ColumnDefinition Width="4*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Column="0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="24*"/>
+                                                        <RowDefinition Height="32*"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,0">
+                                                        <TextBlock HorizontalAlignment="Center" Width="50" Text="{Binding SelectedMovie.ReleaseDate, StringFormat={}{0:yyyy}}" Style="{StaticResource MovieHeaderStyle2}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}" FontSize="18" Foreground="{StaticResource TmdbPrimary}"/>
+                                                        <TextBlock HorizontalAlignment="Center" Width="50" Text="{Binding SelectedMovie.RunTime, StringFormat={}{0}m}" Style="{StaticResource MovieHeaderStyle2}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}" FontSize="18" Foreground="{StaticResource TmdbPrimary}"/>
+                                                    </StackPanel>
+                                                    <TextBlock Grid.Row="1" Text="{Binding SelectedMovie.TagLine}" Style="{StaticResource MovieHeaderStyle1}" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                                                    <Grid Row="2">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="4*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <ItemsControl Grid.Column="0" ItemsSource="{Binding SelectedMovie.Genres}" VerticalAlignment="Center" Margin="0,0,0,60">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel />
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <customControls:MovieGenreControl MovieGenreDisplayText="{Binding Name}" MovieGenreTextStyle="{StaticResource MovieTextStyle}" MovieGenreBackgroundBrush="{StaticResource TmdbPrimary}" MovieGenreForegroundBrush="{StaticResource HatchBrush}"/>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                        <customControls:VerticalOneToTenBarControl 
+                                                            DisplayValue="{Binding SelectedMovie.Rating}"
+                                                            DisplayText="{Binding SelectedMovie.Rating}"
+                                                            VisibilityIndicator="{Binding SelectedMovie, Converter={StaticResource MovieSynopsisHasValueToVisibilityConverter}}"
+                                                            HeaderStyle="{StaticResource MovieHeaderStyle2}"
+                                                            TextStyle="{StaticResource MovieTextStyle}"
+                                                            BackgroundBrush="{StaticResource HatchBrush}"
+                                                            ForegroundBrush="{StaticResource TmdbPrimary}"
+                                                            HorizontalAlignment="Right"
+                                                            Grid.Column="1"/>
+                                                    </Grid>
+                                                    <Grid Row="3">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Grid.Column="0" Content="Play" Style="{StaticResource ButtonStyle}" Command="{Binding PlayMovieCommand}" CommandParameter="{Binding SelectedMovie}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}"/>
+                                                        <Button Grid.Column="1" Content="Edit" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}" Visibility="{Binding SelectedMovie, Converter={StaticResource MovieTitleHasValueToVisibilityConverter}}">
+                                                            <Button.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                                    <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
+                                                                    <Binding Source="{StaticResource Position2}"/>
+                                                                    <Binding ElementName="MainDashboardGrid"/>
+                                                                </MultiBinding>
+                                                            </Button.CommandParameter>
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid Column="1">
+                                                    <Image Source="{Binding SelectedMovie.ImagePath, Converter={StaticResource ImagePathConverter}}" Stretch="Uniform" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid Row="3" Background="{StaticResource DarkGrey1}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="40*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Column="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="22*"/>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="8*"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="1" Text="{Binding SelectedMovie.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
+                                                    <!--<Grid Row="3">
+                                                        Other movies like this
+                                                    </Grid>-->
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        <Grid Name="MovieSettingsGrid" Background="{StaticResource DarkGrey2}" Width="{Binding ActualWidth, ElementName=MainDashboardBorder}" ZIndex="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="8*"/>
-                                    <ColumnDefinition Width="8*"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <xctk:WatermarkTextBox Grid.Column="0" Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource WatermarkTextBoxStyle}" Watermark="Enter movie name here..."/>
+                                    <Button Grid.Column="1" Content="Search" Style="{StaticResource ButtonStyle}" Command="{Binding SearchForMovieByTitleCommand}" CommandParameter="{Binding SearchTerm}"/>
+                                </Grid>
+                                <Grid Row="2" Name="PossibleMatchesListContainer">
+                                    <ListBox ItemsSource="{Binding PossibleMatches}" SelectedItem="{Binding SelectedPossibleMatch, BindsDirectlyToSource=True}" Style="{StaticResource MovieListStyle}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <customControls:ListItemControl ListItemDisplayText="{Binding Title}" ListItemTextStyle="{StaticResource ListTextStyle}" ListItemBackgroundBrush="{StaticResource Transparent}" ListItemForegroundBrush="{StaticResource TmdbPrimary}" ListItemWidth="{Binding ActualWidth, ElementName=PossibleMatchesListContainer}"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Grid>
+                                <Grid Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="Back" Style="{StaticResource ButtonStyle}" Command="{Binding SlideGridCommand}">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                <Binding ElementName="MainDashboardBorder" Path="ActualWidth"/>
+                                                <Binding Source="{StaticResource Position1}"/>
+                                                <Binding ElementName="MainDashboardGrid"/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                    <Button Grid.Column="1" Content="Confirm" Style="{StaticResource ButtonStyle}" Command="{Binding SelectMatchedMovieCommand}">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                <Binding Path="SelectedPossibleMatch"/>
+                                                <Binding Path="SelectedMovie"/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                            <Grid Column="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="12*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="{Binding SelectedPossibleMatch.Title}" Style="{StaticResource MovieHeaderStyle1}"/>
+                                <TextBlock Grid.Row="2" Text="{Binding SelectedPossibleMatch.Synopsis}" Style="{StaticResource MovieTextStyle}"/>
+                                <Image Grid.Row="4" Source="{Binding SelectedPossibleMatch.ImagePath, Converter={StaticResource ImagePathConverter}}" Width="400" Height="564"/>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Border>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
-

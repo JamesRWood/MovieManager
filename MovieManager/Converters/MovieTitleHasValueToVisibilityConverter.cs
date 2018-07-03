@@ -1,27 +1,22 @@
 ﻿namespace MovieManager.Converters
 {
+    using MovieManager.Models;
     using System;
     using System.Globalization;
+    using System.Windows;
     using System.Windows.Data;
 
-    public class ScreenResolutionToPageWidthConverter : IValueConverter
+    public class MovieTitleHasValueToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var width = 1280.00;
-            if (!(parameter is double screenWidth))
+            var val = (Movie)value;
+            if (val == null)
             {
-                return (int) width;
+                return Visibility.Hidden;
             }
 
-            if (screenWidth > width)
-            {
-                return width;
-            }
-
-            width = screenWidth * 0.8;
-
-            return (int)width;
+            return !string.IsNullOrEmpty(val.Title) ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
