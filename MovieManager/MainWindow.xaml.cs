@@ -16,6 +16,8 @@
             AutofacInstaller.RegisterComponents();
 
             InitializeComponent();
+
+            MovieDbFactory.ResetFactory();
         }
     }
 }

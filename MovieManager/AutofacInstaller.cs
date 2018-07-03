@@ -1,12 +1,16 @@
 ﻿namespace MovieManager
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Input;
     using Autofac;
-    using Contracts;
     using Contracts.Controllers;
     using Contracts.Queries;
+    using Contracts.ViewModels;
     using Controllers;
-    using Queries;
-    using ViewModels;
+    using DM.MovieApi;
+    using DM.MovieApi.MovieDb.Movies;
 
     public static class AutofacInstaller
     {
@@ -16,17 +20,30 @@
         {
             var builder = new ContainerBuilder();
 
-            // Controllers
-            builder.RegisterType<MovieController>().As<IMovieController>().InstancePerLifetimeScope();
+            builder.Register(x => MovieDbFactory.Create<IApiMovieRequest>().Value);
 
-            // ViewModels
-            builder.RegisterType<DashboardViewModel>().As<IDashboardViewModel>().InstancePerLifetimeScope();
+            // Controllers
+            builder.RegisterType<ApiController>().As<IApiController>().InstancePerLifetimeScope();
+            builder.RegisterType<FileController>().As<IFileController>().InstancePerLifetimeScope();
+
+            // Commands
+            RegisterType(typeof(ICommand), builder);
 
             // Queries
-            builder.RegisterType<QueryForMovieById>().As<IQueryForMovieById>().InstancePerLifetimeScope();
-            builder.RegisterType<QueryForMoviesesByTitle>().As<IQueryForMoviesByTitle>().InstancePerLifetimeScope();
+            RegisterType(typeof(IQueryBase), builder);
+
+            // ViewModels
+            RegisterType(typeof(IViewModel), builder);
 
             Container = builder.Build();
+        }
+
+        private static void RegisterType<T>(T typeToRegister, ContainerBuilder builder) where T : Type
+        {
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                   .Where(t => t.GetTypeInfo().ImplementedInterfaces.Any(i => i == typeToRegister))
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
         }
     }
 }

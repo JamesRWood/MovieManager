@@ -13,6 +13,8 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,19 +37,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="DM.MovieApi, Version=0.8.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TheMovieDbWrapper.0.8.2\lib\netstandard1.1\DM.MovieApi.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Linq">
       <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
@@ -58,7 +62,9 @@
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,6 +77,31 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="xZune.Vlc, Version=16.3.28.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
+      <HintPath>..\packages\xZune.Vlc.16.04.17\lib\net45\x86\xZune.Vlc.dll</HintPath>
+    </Reference>
+    <Reference Include="xZune.Vlc.Wpf, Version=16.3.28.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
+      <HintPath>..\packages\xZune.Vlc.Wpf.16.04.17\lib\net45\x86\xZune.Vlc.Wpf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -78,13 +109,48 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AutofacInstaller.cs" />
-    <Compile Include="Contracts\Controllers\IMovieController.cs" />
-    <Compile Include="Contracts\IDashboardViewModel.cs" />
+    <Compile Include="Commands\RelayCommands\SearchForMovieByTitleCommand.cs" />
+    <Compile Include="Commands\RelayCommands\SelectMatchedMovieCommand.cs" />
+    <Compile Include="Commands\RelayCommands\SlideGridCommand.cs" />
+    <Compile Include="Commands\RelayCommands\PlayMovieCommand.cs" />
+    <Compile Include="Commands\RelayCommands\RelayCommand.cs" />
+    <Compile Include="Commands\RelayCommands\ScanForLocalMovieFilesCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISearchForMovieByTitleCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISelectMatchedMovieCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\ISlideGridCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\IPlayMovieCommand.cs" />
+    <Compile Include="Contracts\Commands\RelayCommands\IScanForLocalMovieFilesCommand.cs" />
+    <Compile Include="Contracts\Controllers\IApiController.cs" />
+    <Compile Include="Contracts\Controllers\IFileController.cs" />
+    <Compile Include="Contracts\Queries\IQueryBase.cs" />
+    <Compile Include="Contracts\ViewModels\ICommonDataViewModel.cs" />
+    <Compile Include="Contracts\ViewModels\IDashboardViewModel.cs" />
     <Compile Include="Contracts\Queries\IQueryForMoviesByTitle.cs" />
-    <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Contracts\ViewModels\IViewModel.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Converters\ImagePathConverter.cs" />
+    <Compile Include="CustomControls\ListItemControl.cs" />
+    <Compile Include="CustomControls\MovieGenreControl.cs" />
+    <Compile Include="CustomControls\VerticalOneToTenBarControl.cs" />
+    <Compile Include="Helpers\GetImageMajorityColorHelper.cs" />
+    <Compile Include="Converters\MovieTitleHasValueToVisibilityConverter.cs" />
+    <Compile Include="Converters\MovieSynopsisHasValueToVisibilityConverter.cs" />
+    <Compile Include="Converters\MultiValueConverter.cs" />
     <Compile Include="Converters\ScreenResolutionToPageWidthConverter.cs" />
+    <Compile Include="Converters\TextToGeometryConverter.cs" />
+    <Compile Include="Core.cs" />
+    <Compile Include="Helpers\ObservableCollectionHelper.cs" />
+    <Compile Include="Helpers\PropertyChangedHelper.cs" />
+    <Compile Include="Helpers\ViewModelUiBoundPropertyUpdater.cs" />
+    <Compile Include="Helpers\WindowEffectHelper.cs" />
+    <Compile Include="MediaPlayer.xaml.cs">
+      <DependentUpon>MediaPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Queries\QueryForMovieById.cs" />
-    <Compile Include="Queries\QueryForMoviesesByTitle.cs" />
+    <Compile Include="Queries\QueryForMoviesByTitle.cs" />
+    <Compile Include="ViewModels\CommonDataViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +165,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MediaPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Movie.cs" />
@@ -119,15 +193,31 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="PauseIcon.png" />
+    <Resource Include="PlayIcon.png" />
+    <Resource Include="StopIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PauseIcon_Clicked.png" />
+    <Resource Include="PauseIcon_MouseOver.png" />
+    <Resource Include="PlayIcon_Clicked.png" />
+    <Resource Include="PlayIcon_MouseOver.png" />
+    <Resource Include="StopIcon_Clicked.png" />
+    <Resource Include="StopIcon_MouseOver.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

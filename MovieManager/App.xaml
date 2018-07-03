@@ -1,22 +1,33 @@
 ﻿<Application x:Class="MovieManager.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MovieManager"
-             xmlns:viewModels="clr-namespace:MovieManager.ViewModels"
              xmlns:converters="clr-namespace:MovieManager.Converters"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow.xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
     <Application.Resources>
+        <!--Constant values-->
+        <sys:Int32 x:Key="Position1">1</sys:Int32>
+        <sys:Int32 x:Key="Position2">2</sys:Int32>
+        
         <!--Colours-->
-        <SolidColorBrush x:Key="DarkGrey">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="DarkGrey1">#4C4645</SolidColorBrush>
+        <SolidColorBrush x:Key="DarkGrey2">#2D2D2D</SolidColorBrush>
         <SolidColorBrush x:Key="Grey">#6C6A69</SolidColorBrush>
         <SolidColorBrush x:Key="LightGrey">#DCD6D6</SolidColorBrush>
-        
+        <SolidColorBrush x:Key="TmdbPrimary">#01d277</SolidColorBrush>
+        <SolidColorBrush x:Key="TmdbPrimaryMouseOver">#00BE6B</SolidColorBrush>
+        <SolidColorBrush x:Key="TmdbPrimaryPresssed">#00FF90</SolidColorBrush>
+        <SolidColorBrush x:Key="Transparent">#00FFFFFF</SolidColorBrush>
+
+        <SolidColorBrush x:Key="LightGreen">#01CF0B</SolidColorBrush>
+
         <!--Visual Brushes-->
         <VisualBrush x:Key="HatchBrush" TileMode="Tile"
                      Viewport="0,0,5,5" ViewportUnits="Absolute"
                      Viewbox="0,0,5,5" ViewboxUnits="Absolute">
             <VisualBrush.Visual>
-                <Grid Background="{StaticResource DarkGrey}">
+                <Grid Background="{StaticResource DarkGrey1}">
                     <Path Data="M 0 5 L 5 0 M -2 2 L 2 -2 M 3 7 L 7 3"
                           Stroke="{StaticResource Grey}" StrokeEndLineCap="Square"
                           RenderOptions.EdgeMode="Aliased" />
@@ -26,5 +37,231 @@
         
         <!--Converters-->
         <converters:ScreenResolutionToPageWidthConverter x:Key="ScreenResolutionToPageWidthConverter"/>
+        <converters:ImagePathConverter x:Key="ImagePathConverter"/>
+        <converters:MovieSynopsisHasValueToVisibilityConverter x:Key="MovieSynopsisHasValueToVisibilityConverter"/>
+        <converters:MovieTitleHasValueToVisibilityConverter x:Key="MovieTitleHasValueToVisibilityConverter"/>
+        <converters:TextToGeometryConverter x:Key="TextToGeometryConverter"/>
+        <converters:MultiValueConverter x:Key="MultiValueConverter"/>
+
+        <!--Styles-->
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Background" Value="{StaticResource LightGrey}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="32"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="ButtonBorder"  CornerRadius="2" BorderThickness="5" Background="Transparent" BorderBrush="{StaticResource TmdbPrimary}" Margin="2">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="3" Direction="45" Opacity="0.8" Color="Black" RenderingBias="Performance"/>
+                            </Border.Effect>
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource TmdbPrimaryMouseOver}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource TmdbPrimaryPresssed}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource LightGrey}"/>
+                                <Setter TargetName="ButtonBorder" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#DCD6D6" Opacity="0.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="UltraBold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource TmdbPrimaryMouseOver}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource TmdbPrimaryPresssed}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{StaticResource LightGrey}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="MovieTitleStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.8" Direction="45" ShadowDepth="3" BlurRadius="3" RenderingBias="Quality" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="15,10,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="80"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkGrey1}"/>
+        </Style>
+
+        <Style x:Key="MovieHeaderStyle1" TargetType="{x:Type TextBlock}">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="45" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+        </Style>
+
+        <Style x:Key="MovieHeaderStyle2" TargetType="{x:Type TextBlock}">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="45" ShadowDepth="1" BlurRadius="1" RenderingBias="Quality" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkGrey2}"/>
+        </Style>
+
+        <Style x:Key="MovieTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Foreground" Value="{StaticResource LightGrey}"/>
+        </Style>
+
+        <Style x:Key="ListTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+        </Style>
+
+        <Style x:Key="MovieListStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border Name="MoviesListContentItemBorder" Padding="2" Margin="2,0,2,0">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="MoviesListContentItemBorder" Property="Background" Value="{StaticResource TmdbPrimaryMouseOver}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="MoviesListContentItemBorder" Property="Background" Value="{StaticResource TmdbPrimaryPresssed}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollBarStyle" TargetType="ScrollBar">
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+            <Setter Property="Width" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Border CornerRadius="3" Background="{StaticResource HatchBrush}" Width="6">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" Direction="225" Opacity="0.6" ShadowDepth="1" RenderingBias="Performance"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.00001*"/>
+                                </Grid.RowDefinitions>
+                                <Track IsEnabled="{TemplateBinding IsMouseOver}" IsDirectionReversed="True">
+                                    <Track.Thumb>
+                                        <Thumb>
+                                            <Thumb.Style>
+                                                <Style TargetType="{x:Type Thumb}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                                <Border BorderThickness="0" CornerRadius="3" Background="{StaticResource DarkGrey2}">
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Thumb.Style>
+                                        </Thumb>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+                    <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="WatermarkTextBoxStyle" TargetType="{x:Type xctk:WatermarkTextBox}">
+            <Setter Property="Background" Value="{StaticResource DarkGrey1}"/>
+            <Setter Property="Foreground" Value="{StaticResource TmdbPrimary}"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
     </Application.Resources>
 </Application>
